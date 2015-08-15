@@ -55,7 +55,7 @@ class Program
    */
   public function extract_code()
   {
-    $match = preg_match('/(?:http|https)\:\/\/.*\/([A-Za-z0-9]{8})/', $this->url, $matches);
+    $match = preg_match('/([A-Za-z0-9]{8})$/', $this->url, $matches);
 
     if ($match)
     {

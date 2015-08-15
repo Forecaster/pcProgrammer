@@ -16,6 +16,10 @@
 <?
 require_once "Program.php";
 require_once "krumo/class.krumo.php";
+
+$p = "";
+if ($_GET['load'])
+  $p = $_GET['load'];
 ?>
 
 <body style="overflow: hidden;">
@@ -88,9 +92,14 @@ require_once "krumo/class.krumo.php";
 
   var Program = {};
 
+  var urlCode = "<? echo $p;?>";
+
   centerWidgetContainer();
 
   setInterval(killMessages, 2000);
 
-  menuOpen("menuLoadProgram");
+  if (urlCode != "")
+    loadProgram(urlCode);
+  else
+    menuOpen("menuLoadProgram");
 </script>
