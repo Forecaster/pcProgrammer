@@ -94,6 +94,7 @@ function loadProgram(url)
 
         if (test == "true")
         {
+          widgetContainer.innerHTML = "";
           Program.json = content;
 
           Program.widgets = JSON.parse(Program.json).widgets;
