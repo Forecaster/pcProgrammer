@@ -28,6 +28,16 @@ function menuClose()
   }
 }
 
+function menuExit()
+{
+  if (currentMenu != null)
+  {
+    menuHistory = [];
+    hideMenu(currentMenu);
+    currentMenu = null;
+  }
+}
+
 function menuBack()
 {
   if (currentMenu != null)

@@ -36,6 +36,7 @@ if ($_GET['load'])
 </div>
 <div id="menuLoadProgram" class="menu" style="margin-top: -60px; margin-left: -205px; height: 120px; width: 400px;">
   <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
+  <div class="buttonClose" onclick="menuExit()"></div>
   <div class="menuTitle">Load Program</div>
   <div>
     <input type="text" name="programUrl" id="programUrl" placeholder="Enter url to pastebin here" style="width: 100%; margin-bottom: 10px;"/>
@@ -45,6 +46,7 @@ if ($_GET['load'])
 </div>
 <div id="menuAbout" class="menu" style="margin-top: -125px; margin-left: -205px; height: 250px; width: 400px;">
   <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
+  <div class="buttonClose" onclick="menuExit()"></div>
   <div class="menuTitle">About</div>
   <div>This is an application made by <a href="https://www.youtube.com/user/forecaster71">Forecaster</a> for the Minecraft mod <a href="http://minecraft.curseforge.com/mc-mods/224125-pneumaticcraft">PneumaticCraft</a> by <a href="http://www.twitter.com/MineMaarten">MineMaarten</a>.</div>
   <div class="paragraph">The application uses assets from the mod with permission from the author.</div>
