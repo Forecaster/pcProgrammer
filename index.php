@@ -42,7 +42,7 @@ require_once "krumo/class.krumo.php";
 <div id="menuAbout" class="menu" style="margin-top: -125px; margin-left: -205px; height: 250px; width: 400px;">
   <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
   <div class="menuTitle">About</div>
-  <div>This is an application made by <a href="https://www.youtube.com/user/forecaster71">Forecaster</a> for the Minecraft mod <a href="">PneumaticCraft</a> by <a href="">MineMaarten</a>.</div>
+  <div>This is an application made by <a href="https://www.youtube.com/user/forecaster71">Forecaster</a> for the Minecraft mod <a href="http://minecraft.curseforge.com/mc-mods/224125-pneumaticcraft">PneumaticCraft</a> by <a href="http://www.twitter.com/MineMaarten">MineMaarten</a>.</div>
   <div class="paragraph">The application uses assets from the mod with permission from the author.</div>
   <div class="paragraph">The application allows you to view programs made with the mod (for drones and Programmable Controllers) outside of the game. Programs can be exported to pastebin from within the game, and imported into the application from pastebin.</div>
 </div>
