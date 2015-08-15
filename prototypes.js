@@ -33,3 +33,11 @@ if (!String.prototype.insert)
     return string;
   }
 }
+
+if (!String.prototype.nl2br)
+{
+  String.prototype.nl2br = function()
+  {
+    return this.replace("\n", "<br>");
+  }
+}
