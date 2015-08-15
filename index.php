@@ -21,7 +21,7 @@ require_once "krumo/class.krumo.php";
 <body style="overflow: hidden;">
 <div id="messageBox" class="messageBox"></div>
 <div id="debugInfoBox" class="debugInfoBox"></div>
-<div id="widgetTooltip" class="widgetTooltip">
+<div id="widgetTooltip" class="widgetTooltip" style="top: -1000px; left: -1000px;">
   <div id="widgetTooltipTitle"></div>
   <div id="widgetTooltipText"></div>
 </div>
