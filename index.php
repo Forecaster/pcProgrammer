@@ -46,11 +46,17 @@ require_once "krumo/class.krumo.php";
   <div class="paragraph">The application uses assets from the mod with permission from the author.</div>
   <div class="paragraph">The application allows you to view programs made with the mod (for drones and Programmable Controllers) outside of the game. Programs can be exported to pastebin from within the game, and imported into the application from pastebin.</div>
 </div>
+<div id="menuGit" class="menu" style="margin-top: -75px; margin-left: -205px; height: 150px; width: 400px;">
+  <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
+  <div class="menuTitle">Bug Reports</div>
+  <div>If you have found a bug or have a feature request feel free to submit a ticket on the <a href="https://github.com/Forecaster/pcProgrammer/issues">Github issue tracker</a></div>
+  <div class="paragraph">Please describe your issue/suggestion with as much detail as possible!</div>
+</div>
 <div class="mainMenu">
   <div style="display: inline; margin-right: 15px;">PneumaticCraft Program Viewer</div>
   <div class="mainMenuItem" onclick="menuOpen('menuLoadProgram')">Load Program</div>
   <div class="mainMenuItem" onclick="menuOpen('menuAbout')">About</div>
-  <div class="mainMenuItem">Bug Reports</div>
+  <div class="mainMenuItem" onclick="menuOpen('menuGit')">Bug Reports</div>
 </div>
 <div class="zoomBar" id="zoomBar">
 
