@@ -13,13 +13,7 @@ function hideMenu(id)
 
 function menuOpen(id)
 {
-  if (currentMenu != null)
-  {
-    hideMenu(currentMenu);
-    //TODO change history system to add menus when closed instead of when opened
-  }
-
-  menuHistory.push(id);
+  menuClose();
   currentMenu = id;
   showMenu(id);
 }
@@ -28,9 +22,9 @@ function menuClose()
 {
   if (currentMenu != null)
   {
+    menuHistory.push(currentMenu);
     hideMenu(currentMenu);
     currentMenu = null;
-    menuHistory = [];
   }
 }
 
@@ -39,10 +33,9 @@ function menuBack()
   if (currentMenu != null)
   {
     hideMenu(currentMenu);
-    menuHistory.pop();
     if (menuHistory.length > 0)
     {
-      var prevMenu = menuHistory.lastChild;
+      var prevMenu = menuHistory.pop();
       currentMenu = prevMenu;
       showMenu(prevMenu);
     }
