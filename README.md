@@ -1,5 +1,4 @@
 # pcProgrammer
 A drone program viewer for PneumaticCraft for Minecraft
 
-Currently residing at http://towerofawesome.org/pcprogrammer/
-(Work in progress)
+The stable version can be found at http://pcprog.towerofawesome.org/
