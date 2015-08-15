@@ -1,0 +1,172 @@
+/*
+Z-indexes:
+1000: menus
+2000: dialogues
+3000: tooltip
+*/
+.mainMenu
+{
+  z-index          : 1000;
+  position         : fixed;
+  top              : 0;
+  left             : 0;
+
+  border-bottom    : 2px solid black;
+  background-color : lightslategray;
+  padding          : 5px;
+
+  width            : 100%;
+}
+
+.mainMenuItem
+{
+  cursor           : pointer;
+  display          : inline;
+  color            : white;
+
+  border-left      : 2px solid red;
+  background-color : darkred;
+  padding          : 5px;
+
+  width            : 100px;
+}
+
+.mainMenuItem:hover
+{
+  background-color : indianred;
+}
+
+.mainMenuItem:active
+{
+  background-color : darkred;
+}
+
+.menu
+{
+  z-index             : 2000;
+  position            : fixed;
+  top                 : 50%;
+  left                : -1000px;
+
+  padding             : 10px;
+  border              : 1px solid gray;
+  border-radius       : 15px;
+  background-color    : whitesmoke;
+  box-shadow          : 5px 5px rgba(0, 0, 0, .25);
+
+  transition-property : left;
+  transition-duration : .15s;
+}
+
+.menuTitle
+{
+  font-size     : 18pt;
+  text-align    : center;
+  margin-bottom : 15px;
+}
+
+.menuButton
+{
+  border        : 1px solid black;
+  border-radius : 5px;
+  padding       : 5px;
+  cursor        : pointer;
+  text-align    : center;
+  display       : inline-block;
+}
+
+.menuButton:hover
+{
+  background-color : lightblue;
+}
+
+.menuButton:active
+{
+  background-color : aqua;
+}
+
+.menuButton#newLine
+{
+  display : block;
+}
+
+.buttonBack
+{
+  background-image : url('buttons/modern-back-single.png');
+  height           : 20px;
+  width            : 20px;
+
+  position         : absolute;
+  top              : 5px;
+  left             : 5px;
+
+  cursor           : pointer;
+}
+
+.programWidget
+{
+  background-size     : cover;
+  position            : absolute;
+
+  transition-property : top, left, width, height;
+  transition-duration : 1s, 1s, 1s, 1s;
+}
+
+.debugInfoBox
+{
+  position : fixed;
+  bottom   : 0;
+  left     : 0;
+}
+
+.messageBox
+{
+  z-index                   : 1000;
+  position                  : fixed;
+  top                       : 32px;
+  right                     : 0;
+  width                     : 350px;
+
+  padding-top               : 10px;
+  padding-bottom            : 15px;
+  border-bottom-left-radius : 20px;
+
+  background-color          : rgba(200, 0, 0, .25);
+}
+
+.message
+{
+  background-color    : rgba(255, 255, 255, .75);
+  padding-left        : 5px;
+
+  transition-property : height;
+  transition-duration : 1s;
+}
+
+.message:nth-child(2n)
+{
+  background-color : rgba(255, 255, 255, .25);
+}
+
+.widgetContainer
+{
+  position : absolute;
+}
+
+.widgetTooltip
+{
+  z-index          : 3000;
+  position         : absolute;
+  background-color : rgba(34, 0, 22, 0.9);
+  border-radius    : 5px;
+  width            : 200px;
+  padding          : 10px;
+  color            : white;
+  font-weight      : bold;
+  font-size        : 16pt;
+}
+
+.paragraph
+{
+  margin-top : 15px;
+}
