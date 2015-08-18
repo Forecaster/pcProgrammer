@@ -36,8 +36,15 @@ if (!String.prototype.insert)
 
 if (!String.prototype.nl2br)
 {
-  String.prototype.nl2br = function()
+  /**
+   *
+   * @param [is_xhtml] {boolean}
+   * @returns {string}
+   */
+  String.prototype.nl2br = function(is_xhtml)
   {
-    return this.replace("\n", "<br>");
+    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+    return (this + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+    //return this.replace("\n", "<br>").replace("\\n", "<br>");
   }
 }
