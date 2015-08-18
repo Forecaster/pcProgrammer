@@ -112,7 +112,7 @@ function loadProgram(url)
             if (object["multiplyDivide"])
               altTexture = object["multiplyDivide"].value;
 
-            var result = createWidget(object.name.value, altTexture, object.x.value, object.y.value, defaultSpriteScale);
+            var result = createWidget(object.name.value, i, altTexture, object.x.value, object.y.value, defaultSpriteScale);
 
             if (result)
               successes++;
@@ -127,6 +127,7 @@ function loadProgram(url)
           else
             addMessage("The program was loaded!");
 
+          console.log(Program.widgets);
           centerWidgetContainer();
         }
         else
@@ -145,13 +146,14 @@ function loadProgram(url)
 /**
  *
  * @param name {String}
+ * @param id {Number}
  * @param altTexture {Boolean}
  * @param x {Number}
  * @param y {Number}
  * @param defaultSpriteScale {Number}
  * @returns {boolean}
  */
-function createWidget(name, altTexture, x, y, defaultSpriteScale)
+function createWidget(name, id, altTexture, x, y, defaultSpriteScale)
 {
   var container = document.getElementById("widgetContainer");
   var div = document.createElement("div");
@@ -170,7 +172,7 @@ function createWidget(name, altTexture, x, y, defaultSpriteScale)
   div.style.left = x + "px";
   div.style.height = size.height * defaultSpriteScale + "px";
   div.style.width = size.width * defaultSpriteScale + "px";
-  div.id = "widget_" + widgetList.length;
+  div.id = "widget_" + id;
   div.onmouseover = enableWidgetTooltip;
   div.onmouseout  = disableWidgetTooltip;
 
@@ -278,7 +280,12 @@ function enableWidgetTooltip(e)
 {
   var name = e.target.getAttribute("data-widget-name");
   elements[1].children[0].innerHTML = widgets.getName(name);
-  elements[1].children[1].innerHTML = "This is a tooltip!";
+  var tooltip = widgets.getTooltip(parseInt(e.target.id.substring(7)));
+
+  if (typeof tooltip == "string")
+    elements[1].children[1].innerHTML = tooltip.nl2br();
+  else
+    elements[1].children[1].innerHTML = "";
 
   tooltipEnabled = true;
   updateDebugInfo("Tooltip: true");
