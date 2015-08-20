@@ -173,8 +173,7 @@ Widgets.prototype.getAreaType = function(type)
     "Y-Pyramid",
     "Z-Pyramid",
     "Grid",
-    "Random",
-    "Unknown Type"
+    "Random"
   ];
 
   if (type < 0)
