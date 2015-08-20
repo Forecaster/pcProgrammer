@@ -288,7 +288,6 @@ function enableWidgetTooltip(e)
     elements[1].children[1].innerHTML = "";
 
   tooltipEnabled = true;
-  updateDebugInfo("Tooltip: true");
 }
 
 function disableWidgetTooltip()
@@ -296,5 +295,4 @@ function disableWidgetTooltip()
   tooltipEnabled = false;
   elements[1].style.top = "-1000px";
   elements[1].style.left = "-1000px";
-  updateDebugInfo("Tooltip: false");
 }
