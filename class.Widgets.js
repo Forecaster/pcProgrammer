@@ -9,7 +9,7 @@ function Widgets(baseDir)
   this.widget["area"]                              = {sprite: "areaPiece.png"                          ,width: 80, height: 44,  name: "Area"                        , desc: "Area type: {0}"};
   this.widget["entityAttack"]                      = {sprite: "attackPiece.png"                        ,width: 80, height: 108, name: "Entity Attack"               , desc: ""};
   this.widget["blockRightClick"]                   = {sprite: "blockRightClickPiece.png"               ,width: 80, height: 108, name: "Right Click Block"           , desc: "Order: {0}\nPlacing direction: {1}"};
-  this.widget["comment"]                           = {sprite: "commentPiece.png"                       ,width: 80, height: 64,  name: "Comment"                     , desc: ""};
+  this.widget["comment"]                           = {sprite: "commentPiece.png"                       ,width: 80, height: 64,  name: "Comment"                     , desc: "{0}"};
   this.widget["computerCraft"]                     = {sprite: "computerCraftPiece.png"                 ,width: 80, height: 64,  name: "Computer Control"            , desc: ""};
   this.widget["conditionBlock"]                    = {sprite: "conditionBlockPiece.png"                ,width: 80, height: 152, name: "Condition: Block"            , desc: "{0} >= 1"};
   this.widget["conditionCoordinate"]               = {sprite: "conditionCoordinatePiece.png"           ,width: 80, height: 152, name: "Condition: Coordinate"       , desc: "Condition: \"{0}\""};
@@ -120,6 +120,7 @@ Widgets.prototype.getTooltip = function(id)
     {
       case "area"                                 : arguments = [this.getAreaType(widgetArray[id].type.value)]; break;
       case "blockRightClick"                      : arguments = [this.getOrder(thisWidget.order.value), this.getSingleDirection(thisWidget.dir.value)]; break;
+      case "comment"                              : arguments = [(typeof thisWidget.string != "undefined") ? thisWidget.string.value : ""]; break;
       case "conditionBlock"                       : arguments = [((thisWidget.isAndFunction.value == 1) ? "All" : "Any")]; break;
       case "conditionCoordinate"                  : data1 = (thisWidget.operator.value == 0) ? "=" : ">="; data2 = ""; data2 += (thisWidget.checkX.value == 1) ? "x1 "+data1+" x2 and " : ""; data2 += (thisWidget.checkY.value == 1) ? "y1 "+data1+" y2 and " : ""; data2 += (thisWidget.checkZ.value == 1) ? "z1 "+data1+" z2 and " : ""; arguments = [data2.substring(0, (data2.length - 5))];  break;
       case "conditionEntity"                      : arguments = ["Any " + ((thisWidget.operator.value == 0) ? "= " : ">= ") + thisWidget.count.value]; break;
