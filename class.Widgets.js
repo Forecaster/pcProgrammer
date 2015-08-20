@@ -191,15 +191,19 @@ Widgets.prototype.getAreaType = function(type)
  */
 Widgets.prototype.getSingleDirection = function(direction)
 {
-  switch (direction)
-  {
-    case  0: return "Bottom";
-    case  1: return "Top";
-    case  2: return "North";
-    case  3: return "South";
-    case  4: return "West";
-    case  5: return "East";
-  }
+  var directions = [
+    "Bottom",
+    "Top",
+    "North",
+    "South",
+    "West",
+    "East"
+  ];
+
+  if (direction >= directions.length)
+    return "Unknown Direction";
+  else
+    return directions[direction];
 };
 
 Widgets.prototype.getMultiDirections = function(target)
