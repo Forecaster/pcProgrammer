@@ -151,36 +151,38 @@ Widgets.prototype.getTooltip = function(id)
 };
 
 /**
- * Send -1 to receive number of types (Remember to account for starting at 0)
- * @param type
+ * Send negative type to receive number of types
+ * @param type {Number}
  * @returns {String|Number}
  */
 Widgets.prototype.getAreaType = function(type)
 {
-  switch (type)
-  {
-    case -1: return 19;
-    case  0: return "Filled";
-    case  1: return "Frame";
-    case  2: return "Walls";
-    case  3: return "Sphere";
-    case  4: return "Line";
-    case  5: return "X-Wall";
-    case  6: return "Y-Wall";
-    case  7: return "Y-Wall";
-    case  8: return "Y-Wall";
-    case  9: return "Y-Wall";
-    case 10: return "Z-Wall";
-    case 11: return "X-Cylinder";
-    case 12: return "Y-Cylinder";
-    case 13: return "Z-Cylinder";
-    case 14: return "X-Pyramid";
-    case 15: return "Y-Pyramid";
-    case 16: return "Z-Pyramid";
-    case 17: return "Grid";
-    case 18: return "Random";
-    default: return "Unknown Type";
-  }
+  var areaType = [
+    "Filled",
+    "Frame",
+    "Walls",
+    "Sphere",
+    "Line",
+    "X-Wall",
+    "Y-Wall",
+    "Z-Wall",
+    "X-Cylinder",
+    "Y-Cylinder",
+    "Z-Cylinder",
+    "X-Pyramid",
+    "Y-Pyramid",
+    "Z-Pyramid",
+    "Grid",
+    "Random",
+    "Unknown Type"
+  ];
+
+  if (type < 0)
+    return areaType.length;
+  else if (type >= areaType)
+    return "Unknown Type";
+  else
+    return areaType[type];
 };
 
 /**
