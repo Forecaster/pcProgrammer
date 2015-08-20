@@ -151,9 +151,9 @@ Widgets.prototype.getTooltip = function(id)
 };
 
 /**
- * Send negative type to receive number of types
+ * Send negative type to receive type array
  * @param type {Number}
- * @returns {String|Number}
+ * @returns {String|Object}
  */
 Widgets.prototype.getAreaType = function(type)
 {
@@ -178,7 +178,7 @@ Widgets.prototype.getAreaType = function(type)
   ];
 
   if (type < 0)
-    return areaType.length;
+    return areaType;
   else if (type >= areaType)
     return "Unknown Type";
   else
@@ -186,8 +186,9 @@ Widgets.prototype.getAreaType = function(type)
 };
 
 /**
+ * Send negative direction to receive direction array
  * @param direction {Number}
- * @returns {String}
+ * @returns {String|Object}
  */
 Widgets.prototype.getSingleDirection = function(direction)
 {
@@ -200,7 +201,9 @@ Widgets.prototype.getSingleDirection = function(direction)
     "East"
   ];
 
-  if (direction >= directions.length)
+  if (direction < 0)
+    return directions;
+  else if (direction >= directions.length)
     return "Unknown Direction";
   else
     return directions[direction];
