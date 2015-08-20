@@ -57,8 +57,8 @@ function Widgets(baseDir)
   this.widget["logistics"]                         = {sprite: "logisticsPiece.png"                     ,width: 80, height: 64,  name: "Logistics"                   , desc: ""};
   this.widget["place"]                             = {sprite: "placePiece.png"                         ,width: 80, height: 108, name: "Place"                       , desc: "Order: {0}\nPlacing direction: {1}"};
   this.widget["rename"]                            = {sprite: "renamePiece.png"                        ,width: 80, height: 64,  name: "Rename Drone"                , desc: ""};
-  this.widget["RFExport"]                          = {sprite: "RFExportPiece.png"                      ,width: 80, height: 64,  name: "Export RF"                   , desc: ""};
-  this.widget["RFImport"]                          = {sprite: "RFImportPiece.png"                      ,width: 80, height: 64,  name: "Import RF"                   , desc: ""};
+  this.widget["rfExport"]                          = {sprite: "RFExportPiece.png"                      ,width: 80, height: 64,  name: "Export RF"                   , desc: ""};
+  this.widget["rfImport"]                          = {sprite: "RFImportPiece.png"                      ,width: 80, height: 64,  name: "Import RF"                   , desc: ""};
   this.widget["standby"]                           = {sprite: "standbyPiece.png"                       ,width: 60, height: 64,  name: "Standby"                     , desc: ""};
   this.widget["start"]                             = {sprite: "startPiece.png"                         ,width: 60, height: 64,  name: "Start"                       , desc: ""};
   this.widget["suicide"]                           = {sprite: "suicidePiece.png"                       ,width: 80, height: 44,  name: "Suicide"                     , desc: ""};
