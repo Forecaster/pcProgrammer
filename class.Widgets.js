@@ -135,9 +135,9 @@ Widgets.prototype.getTooltip = function(id)
       case "inventoryExport"                      : arguments = [this.getMultiDirections(thisWidget)]; break;
       case "inventoryImport"                      : arguments = [this.getMultiDirections(thisWidget)]; break;
       case "itemAssign"                           : arguments = [thisWidget.variable.value]; break;
-      case "itemFilter"                           : if (thisWidget.useMetadata.value == 0) data1 = "Ignoring"; else data1 = "Using"; if (thisWidget.useNBT.value == 0) data2 = "Ignoring"; else data2 = "Using"; arguments = [thisWidget.id.value + ":" + thisWidget.specificMeta.value, data1, data2]; break;
+      case "itemFilter"                           : data1 = (thisWidget.useMetadata.value == 0) ? "Ignoring" : "Using"; data2 = (thisWidget.useNBT.value == 0) ? "Ignoring" : "Using"; arguments = [(typeof thisWidget.id != "undefined") ? thisWidget.id.value + ":" + thisWidget.specificMeta.value : "Not set", data1, data2]; break;
       case "liquidExport"                         : arguments = [this.getMultiDirections(thisWidget)]; break;
-      case "liquidFilter"                         : arguments = [thisWidget.fluid.value]; break;
+      case "liquidFilter"                         : arguments = [(typeof thisWidget.fluid != "undefined") ? thisWidget.fluid.value : "Not set"]; break;
       case "liquidImport"                         : arguments = [this.getMultiDirections(thisWidget)]; break;
       case "place"                                : arguments = [this.getOrder(thisWidget.order.value), this.getSingleDirection(thisWidget.dir.value)]; break;
       case "teleport"                             : if (thisWidget.doneWhenDeparting.value == 1) data1 = "Departing"; else data1 = "Arrived"; arguments = [data1]; break;
