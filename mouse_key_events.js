@@ -141,11 +141,14 @@ function onMouseWheel(e)
   else if (e.wheelDelta)
     detail = e.wheelDelta;
 
-  if (detail > 0)
-    decreaseScale();
-  else
+  if (detail == 120)
     increaseScale();
-  return false;
+  else if (detail == -120)
+    decreaseScale();
+  else if (detail == -3)
+    increaseScale();
+  else if (detail == 3)
+    decreaseScale();
 }
 
 function onMouseMove(e)
