@@ -15,7 +15,7 @@ function ConfigModules()
   this.modules["limitInteractions"]   = {elementId: "menuModule:limitInteractions",   fields: [{name: "useMaxActions", type: 1}, {name: "maxActions", type: 3}]};
   this.modules["anyAllBlocks"]        = {elementId: "menuModule:anyAllBlocks",        fields: [{name: "isAndFunction", type: 1}]};
   this.modules["equalsGreater"]       = {elementId: "menuModule:equalsGreater",       fields: [{name: "operator", type: 1}]};
-  this.modules["equalsGreaterParam"]  = {elementId: "menuModule:equalsGreaterParam",  fields: [{name: "operator", type: 1}, {name: "requiredCount", type: 3}]};
+  this.modules["equalsGreaterParam"]  = {elementId: "menuModule:equalsGreaterParam",  fields: [{name: "operator", type: 1}, {name: "count", type: 3}]};
   this.modules["XYZ"]                 = {elementId: "menuModule:XYZ",                 fields: [{name: "checkX", type: 1}, {name: "checkY", type: 1}, {name: "checkZ", type: 1}]};
   this.modules["operator"]            = {elementId: "menuModule:operator",            fields: [{name: "multiplyDivide", type: 1}]};
   this.modules["variableName"]        = {elementId: "menuModule:variableName",        fields: [{name: "variable", type: 8}]};
@@ -117,12 +117,12 @@ ConfigModules.prototype.updateConfigFields = function(modules, widgetId)
     }
     else if (modules[moduleIndex] == "sneaking")
     {
-      if (typeof thisWidget.sneaking.value == "number" && thisWidget.sneaking.value == 1)
+      if (typeof thisWidget.sneaking != "undefined" && thisWidget.sneaking.value == 1)
         document.getElementById("input_sneaking").setAttribute("checked", "1");
     }
     else if (modules[moduleIndex] == "dropMethod")
     {
-      if (typeof thisWidget.dropStraight.value == "number" && thisWidget.dropStraight.value == 1)
+      if (typeof thisWidget.dropStraight != "undefined" && thisWidget.dropStraight.value == 1)
         document.getElementById("input_dropMethod_1").setAttribute("checked", "1");
       else
         document.getElementById("input_dropMethod_0").setAttribute("checked", "1");
@@ -144,114 +144,114 @@ ConfigModules.prototype.updateConfigFields = function(modules, widgetId)
     }
     else if (modules[moduleIndex] == "doneWhen")
     {
-      if (typeof thisWidget.doneWhenDeparting.value == "number" && thisWidget.doneWhenDeparting.value == 1)
+      if (typeof thisWidget.doneWhenDeparting != "undefined" && thisWidget.doneWhenDeparting.value == 1)
         document.getElementById("input_doneWhen_1").setAttribute("checked", "1");
       else
         document.getElementById("input_doneWhen_0").setAttribute("checked", "1");
     }
     else if (modules[moduleIndex] == "doneWhen")
     {
-      if (typeof thisWidget.text.value != "undefined" && thisWidget.text.value != "")
+      if (typeof thisWidget.text != "undefined" && thisWidget.text.value != "")
         document.getElementById("input_text").value = thisWidget.text.value;
       else
         document.getElementById("input_text").value = "";
     }
     else if (modules[moduleIndex] == "text")
     {
-      if (typeof thisWidget.string.value != "undefined")
+      if (typeof thisWidget.string != "undefined")
         document.getElementById("input_text").value = thisWidget.string.value;
       else
         document.getElementById("input_text").value = "";
     }
     else if (modules[moduleIndex] == "useCount")
     {
-      if (typeof thisWidget.useCount.value != "undefined" && thisWidget.useCount.value == 1)
+      if (typeof thisWidget.useCount != "undefined" && thisWidget.useCount.value == 1)
         document.getElementById("input_useCount_0").setAttribute("checked", "1");
 
-      if (typeof thisWidget.count.value != "undefined")
+      if (typeof thisWidget.count != "undefined")
         document.getElementById("input_useCount_1").value = thisWidget.count.value;
       else
         document.getElementById("input_useCount_1").value = "1";
     }
     else if (modules[moduleIndex] == "limitInteractions")
     {
-      if (typeof thisWidget.useMaxActions.value != "undefined" && thisWidget.useMaxActions.value == 1)
+      if (typeof thisWidget.useMaxActions != "undefined" && thisWidget.useMaxActions.value == 1)
         document.getElementById("input_limitInteractions_0").setAttribute("checked", "1");
 
-      if (typeof thisWidget.maxActions.value != "undefined")
+      if (typeof thisWidget.maxActions != "undefined")
         document.getElementById("input_limitInteractions_1").value = thisWidget.maxActions.value;
       else
         document.getElementById("input_limitInteractions_1").value = "1";
     }
     else if (modules[moduleIndex] == "anyAllBlocks")
     {
-      if (typeof thisWidget.isAndFunction.value != "undefined" && thisWidget.isAndFunction.value == 1)
+      if (typeof thisWidget.isAndFunction != "undefined" && thisWidget.isAndFunction.value == 1)
         document.getElementById("input_anyAllBlocks_1").setAttribute("checked", "1");
       else
         document.getElementById("input_anyAllBlocks_0").setAttribute("checked", "1");
     }
     else if (modules[moduleIndex] == "equalsGreater")
     {
-      if (typeof thisWidget.operator.value != "undefined" && thisWidget.operator.value == 1)
+      if (typeof thisWidget.operator != "undefined" && thisWidget.operator.value == 1)
         document.getElementById("input_equalsGreater_1").setAttribute("checked", "1");
       else
         document.getElementById("input_equalsGreater_0").setAttribute("checked", "1");
     }
     else if (modules[moduleIndex] == "equalsGreaterParam")
     {
-      if (typeof thisWidget.operator.value != "undefined" && thisWidget.operator.value == 1)
+      if (typeof thisWidget.operator != "undefined" && thisWidget.operator.value == 1)
         document.getElementById("input_equalsGreaterParam_1").setAttribute("checked", "1");
       else
         document.getElementById("input_equalsGreaterParam_0").setAttribute("checked", "1");
 
-      if (typeof thisWidget.requiredCount.value != "undefined")
-        document.getElementById("input_equalsGreaterParam_2").value = thisWidget.requiredCount.value;
+      if (typeof thisWidget.count != "undefined")
+        document.getElementById("input_equalsGreaterParam_2").value = thisWidget.count.value;
       else
         document.getElementById("input_equalsGreaterParam_2").value = "1";
     }
     else if (modules[moduleIndex] == "XYZ")
     {
-      if (typeof thisWidget.checkX.value != "undefined" && thisWidget.checkX.value == 1)
+      if (typeof thisWidget.checkX != "undefined" && thisWidget.checkX.value == 1)
         document.getElementById("input_XYZ_0").setAttribute("checked", "1");
-      if (typeof thisWidget.checkY.value != "undefined" && thisWidget.checkY.value == 1)
+      if (typeof thisWidget.checkY != "undefined" && thisWidget.checkY.value == 1)
         document.getElementById("input_XYZ_1").setAttribute("checked", "1");
-      if (typeof thisWidget.checkZ.value != "undefined" && thisWidget.checkZ.value == 1)
+      if (typeof thisWidget.checkZ != "undefined" && thisWidget.checkZ.value == 1)
         document.getElementById("input_XYZ_2").setAttribute("checked", "1");
     }
     else if (modules[moduleIndex] == "operator")
     {
-      if (typeof thisWidget.multiplyDivide.value != "undefined" && thisWidget.multiplyDivide.value == 1)
+      if (typeof thisWidget.multiplyDivide != "undefined" && thisWidget.multiplyDivide.value == 1)
         document.getElementById("input_operator_1").setAttribute("checked", "1");
       else
         document.getElementById("input_operator_0").setAttribute("checked", "1");
     }
     else if (modules[moduleIndex] == "variableName")
     {
-      if (typeof thisWidget.variable.value != "undefined")
+      if (typeof thisWidget.variable != "undefined")
         document.getElementById("input_variableName").value = thisWidget.variable.value;
       else
         document.getElementById("input_variableName").value = "";
     }
     else if (modules[moduleIndex] == "constantVariable")
     {
-      if (typeof thisWidget.useVariable.value != "undefined" && thisWidget.useVariable.value == 1)
+      if (typeof thisWidget.useVariable != "undefined" && thisWidget.useVariable.value == 1)
         document.getElementById("input_constantVariable_1").setAttribute("checked", "1");
       else
         document.getElementById("input_constantVariable_0").setAttribute("checked", "1");
     }
     else if (modules[moduleIndex] == "XYZinput")
     {
-      if (typeof thisWidget.posX.value != "undefined")
+      if (typeof thisWidget.posX != "undefined")
         document.getElementById("input_XYZinput_0").value = thisWidget.posX.value;
       else
         document.getElementById("input_XYZinput_0").value = "0";
 
-      if (typeof thisWidget.posX.value != "undefined")
+      if (typeof thisWidget.posX != "undefined")
         document.getElementById("input_XYZinput_1").value = thisWidget.posY.value;
       else
         document.getElementById("input_XYZinput_1").value = "0";
 
-      if (typeof thisWidget.posX.value != "undefined")
+      if (typeof thisWidget.posX != "undefined")
         document.getElementById("input_XYZinput_2").value = thisWidget.posZ.value;
       else
         document.getElementById("input_XYZinput_2").value = "0";
@@ -405,7 +405,7 @@ ConfigModules.prototype.getModule = function(module)
     element.innerHTML = "" +
       "<div><input type=\"radio\" name=\"input_equalsGreaterParam\" id=\"input_equalsGreaterParam_0\"/><label for=\"input_equalsGreaterParam_0\">=</label></div>" +
       "<div><input type=\"radio\" name=\"input_equalsGreaterParam\" id=\"input_equalsGreaterParam_1\"/><label for=\"input_equalsGreaterParam_1\">>=</label></div>" +
-      "<div><input type=\"text\" name=\"input_equalsGreaterParam\" id=\"input_equalsGreaterParam_0\"/></div>";
+      "<div><input type=\"text\" name=\"input_equalsGreaterParam\" id=\"input_equalsGreaterParam_2\"/></div>";
   }
   else if (module == "XYZ")
   {

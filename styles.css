@@ -200,7 +200,7 @@ Z-indexes:
 .widgetColumn
 {
   width    : 190px;
-  position : relative;
+  position : absolute;
 }
 
 .widgetTooltip
