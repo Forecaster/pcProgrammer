@@ -1,13 +1,13 @@
 /*
 Z-indexes:
-1000: menus
-2000: overlay
-3000: dialogues
-4000: tooltip
+20000: menus
+20000: overlay
+30000: dialogues
+40000: tooltip
 */
 .overlay
 {
-  z-index          : 2000;
+  z-index          : 10000;
   position         : absolute;
   top              : 0;
   left             : 0;
@@ -19,7 +19,7 @@ Z-indexes:
 
 .mainMenu
 {
-  z-index          : 1000;
+  z-index          : 20000;
   position         : fixed;
   top              : 0;
   left             : 0;
@@ -56,10 +56,10 @@ Z-indexes:
 
 .menu
 {
-  z-index                 : 3000;
+  z-index                 : 30000;
   position                : fixed;
   top                     : 50%;
-  left                    : -1000px;
+  left                    : -20000px;
 
   padding                 : 10px;
   border                  : 1px solid gray;
@@ -165,7 +165,7 @@ Z-indexes:
 
 .messageBox
 {
-  z-index                   : 1000;
+  z-index                   : 20000;
   position                  : fixed;
   top                       : 32px;
   right                     : 0;
@@ -205,7 +205,7 @@ Z-indexes:
 
 .widgetTooltip
 {
-  z-index          : 4000;
+  z-index          : 40000;
   position         : absolute;
   background-color : rgba(34, 0, 22, 0.9);
   border-radius    : 5px;
@@ -218,4 +218,55 @@ Z-indexes:
 .paragraph
 {
   margin-top : 15px;
+}
+
+.contextMenu
+{
+  z-index    : 40000;
+  position   : absolute;
+
+  width      : 200px;
+  box-shadow : 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.contextMenuItem
+{
+  cursor           : pointer;
+  color            : white;
+
+  border-left      : 2px solid red;
+  background-color : darkred;
+  padding          : 5px;
+}
+
+.contextMenuItem:hover
+{
+  background-color : indianred;
+}
+
+.contextMenuItem:active
+{
+  background-color : darkred;
+}
+
+.focusIndicator
+{
+  z-index                    : 20000;
+  width                      : 30px;
+  height                     : 30px;
+
+  margin-left                : -15px;
+  margin-top                 : -15px;
+
+  position                   : absolute;
+
+  top                        : 50%;
+  left                       : 50%;
+
+  background-color           : red;
+  border-radius              : 10px;
+
+  transition-property        : background-color, visibility;
+  transition-duration        : 2s, 2s;
+  transition-timing-function : ease, step-end;
 }

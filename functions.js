@@ -1,12 +1,12 @@
 //<editor-fold desc="Menu Functions">
 function enableOverlay()
 {
-  document.getElementById("overlay").style.visibility = "visible;"
+  document.getElementById("overlay").style.visibility = "visible";
 }
 
 function disableOverlay()
 {
-  document.getElementById("overlay").style.visibility = "collapse;"
+  document.getElementById("overlay").style.visibility = "collapse";
 }
 
 function showMenu(id, title)
@@ -117,6 +117,24 @@ function enableWidgetConfigModules(widgetId, center, left, right)
 }
 //</editor-fold>
 
+//<editor-fold desc="Context Menu Functions">
+function contextMenuShow(e)
+{
+  var element = document.getElementById("contextMenu");
+
+  element.style.top = e.clientY + "px";
+  element.style.left = e.clientX + "px";
+}
+
+function contextMenuHide()
+{
+  var element = document.getElementById("contextMenu");
+
+  element.style.top = "-1000px";
+  element.style.left = "-1000px";
+}
+//</editor-fold>
+
 //<editor-fold desc="Message Functions">
 function addMessage(message)
 {
@@ -144,6 +162,13 @@ function killMessages()
 }
 
 //</editor-fold>
+
+function applicationReset()
+{
+  lastStartFocused = 0;
+  lastWidgetFocused = 0;
+  centerWidgetContainer();
+}
 
 /**
  *
@@ -188,12 +213,16 @@ function loadProgram(url)
             }
           }
           if (failures > 0)
+          {
             addMessage("The program was loaded! Failed to load " + failures + " pieces!");
+          }
           else
+          {
             addMessage("The program was loaded!");
+            applicationReset();
+          }
 
           console.log(Program.widgets);
-          centerWidgetContainer();
         }
         else
         {
@@ -240,7 +269,7 @@ function createWidget(name, id, altTexture, x, y, defaultSpriteScale)
   div.id = "widget_" + id;
   div.onmouseover = enableWidgetTooltip;
   div.onmouseout = disableWidgetTooltip;
-  div.onmouseup = widgetConfigMenu;
+  //div.onmouseup = widgetConfigMenu;
 
   div.setAttribute("data-widget-name", name);
   div.setAttribute("data-base-x", x);
@@ -354,6 +383,11 @@ function centerWidgetContainer()
   widgetContainer.style.left = window.innerWidth * .5 + "px";
 }
 
+function getWindowCenter()
+{
+  return {height: window.innerHeight * .5, width: window.innerWidth * .5};
+}
+
 function enableWidgetTooltip(e)
 {
   var name = e.target.getAttribute("data-widget-name");
@@ -375,8 +409,142 @@ function disableWidgetTooltip()
   elements[1].style.left = "-1000px";
 }
 
-function getDataForWidgetModules(widgetId, modules)
+function focusOnWidgetPos(widgetId)
 {
-  //TODO list modules, get data from widget object based on global variable with list of fields for each module
-  //TODO figure out which modules use which fields, create global variable which contains fields and types for specific module
+  var newX;
+  var newY;
+  var widget = document.getElementById("widget_" + widgetId);
+  var thisWidget = Program.widgets.value[widgetId];
+
+  var screenCenterX = getWindowCenter().width;
+  var screenCenterY = getWindowCenter().height;
+
+  var widgetX = parseInt(widget.style.left);
+  var widgetY = parseInt(widget.style.top);
+
+  var widgetSize = widgets.getSize(thisWidget.name.value);
+
+  console.log(widgetSize);
+  if (typeof widgetSize != "undefined" && widgetSize != false)
+  {
+    newX = screenCenterX + (widgetX * -1) - (widgetSize.width * (currentScale * defaultSpriteScale * 0.5));
+    newY = screenCenterY + (widgetY * -1) - (widgetSize.height * (currentScale * defaultSpriteScale * 0.5));
+  }
+  else
+  {
+    newX = screenCenterX + (widgetX * -1);
+    newY = screenCenterY + (widgetY * -1);
+  }
+
+  widgetContainer.style.top = newY + "px";
+  widgetContainer.style.left = newX + "px";
+}
+
+function focusFirstStart()
+{
+  var widgets = Program.widgets.value;
+
+  for (var i = 0; i < widgets.length; i++)
+  {
+    if (widgets[i].name.value == "start")
+    {
+      lastWidgetFocused = i;
+      focusOnWidgetPos(i);
+      highlightFocus();
+      return true;
+    }
+  }
+  addMessage("No start piece found.");
+  return false;
+}
+
+function focusNextStart()
+{
+  var widgets = Program.widgets.value;
+
+  for (var i = lastStartFocused + 1; i < widgets.length; i++)
+  {
+    if (widgets[i].name.value == "start")
+    {
+      lastWidgetFocused = i;
+      focusOnWidgetPos(i);
+      highlightFocus();
+      return true;
+    }
+  }
+  lastWidgetFocused = 0;
+  focusFirstStart();
+}
+
+function focusFirstLabel()
+{
+  var widgets = Program.widgets.value;
+
+  for (var i = 0; i < widgets.length; i++)
+  {
+    if (widgets[i].name.value == "label")
+    {
+      lastWidgetFocused = i;
+      focusOnWidgetPos(i);
+      highlightFocus();
+      return true;
+    }
+  }
+  addMessage("No label piece found.");
+  return false;
+}
+
+function focusNextLabel()
+{
+  var widgets = Program.widgets.value;
+
+  for (var i = lastWidgetFocused + 1; i < widgets.length; i++)
+  {
+    if (widgets[i].name.value == "label")
+    {
+      lastWidgetFocused = i;
+      focusOnWidgetPos(i);
+      highlightFocus();
+      return true;
+    }
+  }
+  lastWidgetFocused = 0;
+  focusFirstLabel();
+}
+
+function focusFirstWidget()
+{
+  var widgets = Program.widgets.value;
+
+  lastWidgetFocused = 0;
+  focusOnWidgetPos(lastWidgetFocused);
+  highlightFocus();
+  return true;
+}
+
+function focusNextWidget()
+{
+  var widgets = Program.widgets.value;
+
+  var i = lastWidgetFocused + 1;
+  if (i < widgets.length)
+  {
+    lastWidgetFocused = i;
+    focusOnWidgetPos(i);
+    highlightFocus();
+    return true;
+  }
+  focusFirstWidget();
+}
+
+function highlightFocus()
+{
+  var element = document.getElementById("focusIndicator");
+
+  var tmp = element.style.transitionDuration;
+  element.style.visibility = "visible";
+  element.style.transitionDuration = "0s";
+  element.style.backgroundColor = "red";
+
+  setTimeout(function (element) {element.style.transitionDuration = null; element.style.backgroundColor = "transparent"; element.style.visibility = "collapse"}, 1000, element);
 }

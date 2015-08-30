@@ -44,7 +44,7 @@ if ($_GET['load'])
     <input type="text" name="programUrl" id="programUrl" placeholder="Enter url to pastebin here" style="width: 100%; margin-bottom: 10px;"/>
   </div>
   <div class="menuButton" style="margin-left: 36%;" onclick="loadUrl();">Load</div>
-  <div class="menuButton" onclick="menuClose()">Cancel</div>
+  <div class="menuButton" onclick="menuExit()">Cancel</div>
 </div>
 <div id="menuAbout" class="menu" style="margin-top: -125px; margin-left: -205px; height: 250px; width: 400px;">
   <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
@@ -76,13 +76,15 @@ if ($_GET['load'])
     <div id="menuWidgetConfigModulesRight" class="widgetColumn" style="left: 210px;"></div>
   </div>
 </div>
-<div id="menuOptions" class="menu" style="margin-top:">
-
+<div id="contextMenu" class="contextMenu" style="left: -1000px; top: -1000px;">
+  <div class="contextMenuItem" onclick="focusNextStart()">Focus Next Start</div>
+  <div class="contextMenuItem" onclick="focusNextLabel()">Focus Next Label</div>
+  <div class="contextMenuItem" onclick="focusNextWidget()">Focus Next Piece</div>
 </div>
-<div class="zoomBar" id="zoomBar">
-
-</div>
+<div id="menuOptions" class="menu" style="margin-top:"></div>
+<div class="zoomBar" id="zoomBar"></div>
 <div id="widgetContainer" class="widgetContainer"></div>
+<div id="focusIndicator" class="focusIndicator" style="visibility: collapse;"></div>
 </body>
 </html>
 
@@ -96,6 +98,8 @@ if ($_GET['load'])
   var scaleStep = 1;
   var maxScale = 4;
   var minScale = 1;
+
+  var lastWidgetFocused = 0;
 
   var tooltipEnabled = false;
 

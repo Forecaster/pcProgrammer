@@ -11,7 +11,7 @@ var button0DownTime;
 var button0DownPos;
 
 var shift = 0;
-var leftMouse = false;
+var pan = false;
 
 document.onmousedown = onMouseDown;
 document.onmouseup = onMouseUp;
@@ -56,8 +56,16 @@ function onContextMenu(e)
 
   if (target == null)
     target = e.srcElement;
-
-  return false;
+  if (target.className == "programWidget")
+  {
+    widgetConfigMenu(e);
+    return false;
+  }
+  else if (target.tagName == "HTML")
+  {
+    contextMenuShow(e);
+    return false;
+  }
 }
 
 function onKeyDown(e)
@@ -89,11 +97,14 @@ function onMouseDown(e)
   
   if (e.button == 0)
   {
-    leftMouse = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    widgetContainerStartX = extractNumber(widgetContainer.style.left);
-    widgetContainerStartY = extractNumber(widgetContainer.style.top);
+    if (target.tagName == "HTML")
+    {
+      pan = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      widgetContainerStartX = extractNumber(widgetContainer.style.left);
+      widgetContainerStartY = extractNumber(widgetContainer.style.top);
+    }
   }
 
 }
@@ -109,7 +120,11 @@ function onMouseUp(e)
     target = e.srcElement;
 
   if (e.button == 0)
-    leftMouse = false;
+  {
+    pan = false;
+    if (target.tagName == "HTML")
+      contextMenuHide();
+  }
 }
 
 function onMouseWheel(e)
@@ -138,7 +153,7 @@ function onMouseMove(e)
   if (e == null)
     e = window.event;
 
-  if (leftMouse)
+  if (pan)
   {
     var changeX = e.clientX - startX;
     var changeY = e.clientY - startY;
@@ -184,7 +199,6 @@ function widgetConfigMenu(e)
     var currentWidgetName = Program.widgets.value[currentWidgetConfigId].name.value;
     var currentWidgetData = widgets.widget[currentWidgetName];
 
-    console.log(currentWidgetData);
     enableWidgetConfigModules(currentWidgetConfigId, currentWidgetData.confModules, currentWidgetData.confModulesLeft, currentWidgetData.confModulesRight);
     menuOpen("menuWidgetConfig", currentWidgetData.name);
   }
