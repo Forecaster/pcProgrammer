@@ -105,6 +105,9 @@ function onMouseUp(e)
   if (target == null)
     target = e.srcElement;
 
+  if (target == null)
+    target = e.srcElement;
+
   if (e.button == 0)
     leftMouse = false;
 }
@@ -112,6 +115,10 @@ function onMouseUp(e)
 function onMouseWheel(e)
 {
   var target = e.target;
+
+  if (target == null)
+    target = e.srcElement;
+
   var detail;
 
   if (e.detail)
@@ -161,4 +168,24 @@ function onMouseMove(e)
   //  activeTooltip.style.left = (e.clientX + 10) + "px";
   //  activeTooltip.style.top = (e.clientY) + "px";
   //}
+}
+
+function widgetConfigMenu(e)
+{
+  var target = e.target;
+
+  if (target == null)
+    target = e.srcElement;
+
+  if (e.button == 2)
+  {
+    var pattern = /_([0-9]+)$/g;
+    currentWidgetConfigId = pattern.exec(target.id)[1];
+    var currentWidgetName = Program.widgets.value[currentWidgetConfigId].name.value;
+    var currentWidgetData = widgets.widget[currentWidgetName];
+
+    console.log(currentWidgetData);
+    enableWidgetConfigModules(currentWidgetConfigId, currentWidgetData.confModules, currentWidgetData.confModulesLeft, currentWidgetData.confModulesRight);
+    menuOpen("menuWidgetConfig", currentWidgetData.name);
+  }
 }

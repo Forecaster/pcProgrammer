@@ -1,7 +1,22 @@
 //<editor-fold desc="Menu Functions">
-function showMenu(id)
+function enableOverlay()
+{
+  document.getElementById("overlay").style.visibility = "visible;"
+}
+
+function disableOverlay()
+{
+  document.getElementById("overlay").style.visibility = "collapse;"
+}
+
+function showMenu(id, title)
 {
   var target = document.getElementById(id);
+  var titletarget = document.getElementById(id + "Title");
+
+  if (typeof title != "undefined")
+    titletarget.innerHTML = title;
+
   target.style.left = "50%";
 }
 
@@ -11,11 +26,12 @@ function hideMenu(id)
   target.style.left = "-1000px";
 }
 
-function menuOpen(id)
+function menuOpen(id, title)
 {
   menuClose();
   currentMenu = id;
-  showMenu(id);
+  enableOverlay();
+  showMenu(id, title);
 }
 
 function menuClose()
@@ -35,6 +51,7 @@ function menuExit()
     menuHistory = [];
     hideMenu(currentMenu);
     currentMenu = null;
+    disableOverlay();
   }
 }
 
@@ -49,6 +66,53 @@ function menuBack()
       currentMenu = prevMenu;
       showMenu(prevMenu);
     }
+    else
+      disableOverlay();
+  }
+}
+
+/**
+ * @param widgetId {Number}
+ * @param center {Array}
+ * @param left {Array}
+ * @param right {Array}
+ */
+function enableWidgetConfigModules(widgetId, center, left, right)
+{
+  var i;
+  var y;
+  widgetConfigModuleContainer.center.innerHTML = "";
+  widgetConfigModuleContainer.left.innerHTML = "";
+  widgetConfigModuleContainer.right.innerHTML = "";
+
+  if (typeof center != "undefined" && center.length > 0)
+  {
+    console.log(center);
+    for (i = 0; i < center.length; i++)
+    {
+      widgetConfigModuleContainer.center.appendChild(modules.getModule(center[i]));
+    }
+    modules.updateConfigFields(center, widgetId);
+  }
+
+  if (typeof left != "undefined" && left.length > 0)
+  {
+    console.log(left);
+    for (i = 0; i < left.length; i++)
+    {
+      widgetConfigModuleContainer.left.appendChild(modules.getModule(left[i]));
+    }
+    modules.updateConfigFields(left, widgetId);
+  }
+
+  if (typeof right != "undefined" && right.length > 0)
+  {
+    console.log(right);
+    for (i = 0; i < right.length; i++)
+    {
+      widgetConfigModuleContainer.right.appendChild(modules.getModule(right[i]));
+    }
+    modules.updateConfigFields(right, widgetId);
   }
 }
 //</editor-fold>
@@ -78,6 +142,7 @@ function killMessages()
       target.removeChild(value);
   }
 }
+
 //</editor-fold>
 
 /**
@@ -174,7 +239,8 @@ function createWidget(name, id, altTexture, x, y, defaultSpriteScale)
   div.style.width = size.width * defaultSpriteScale + "px";
   div.id = "widget_" + id;
   div.onmouseover = enableWidgetTooltip;
-  div.onmouseout  = disableWidgetTooltip;
+  div.onmouseout = disableWidgetTooltip;
+  div.onmouseup = widgetConfigMenu;
 
   div.setAttribute("data-widget-name", name);
   div.setAttribute("data-base-x", x);
@@ -238,6 +304,7 @@ function decreaseScale()
     currentScale = newScale;
   }
 }
+
 //</editor-fold>
 
 /**
@@ -249,17 +316,28 @@ function convertDataType(type)
 {
   switch (type)
   {
-    case 1  : return "number";
-    case 2  : return "number";
-    case 3  : return "number";
-    case 4  : return "number";
-    case 5  : return "number";
-    case 6  : return "number";
-    case 7  : return "object";
-    case 8  : return "string";
-    case 9  : return "object";
-    case 10 : return false;
-    case 11 : return false;
+    case 1  :
+      return "number";
+    case 2  :
+      return "number";
+    case 3  :
+      return "number";
+    case 4  :
+      return "number";
+    case 5  :
+      return "number";
+    case 6  :
+      return "number";
+    case 7  :
+      return "object";
+    case 8  :
+      return "string";
+    case 9  :
+      return "object";
+    case 10 :
+      return false;
+    case 11 :
+      return false;
   }
 }
 
@@ -295,4 +373,10 @@ function disableWidgetTooltip()
   tooltipEnabled = false;
   elements[1].style.top = "-1000px";
   elements[1].style.left = "-1000px";
+}
+
+function getDataForWidgetModules(widgetId, modules)
+{
+  //TODO list modules, get data from widget object based on global variable with list of fields for each module
+  //TODO figure out which modules use which fields, create global variable which contains fields and types for specific module
 }

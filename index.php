@@ -5,6 +5,7 @@
   <title>PneumaticCraft Program Viewer</title>
   <link rel="stylesheet" href="styles.css"/>
   <script src="class.Widgets.js"></script>
+  <script src="class.ConfigModules.js"></script>
   <script src="functions.js"></script>
   <script src="functions_buttons.js"></script>
   <script src="mouse_key_events.js"></script>
@@ -23,6 +24,7 @@ if ($_GET['load'])
 ?>
 
 <body style="overflow: hidden;">
+<div id="overlay" class="overlay" style="visibility: collapse;"></div>
 <div id="messageBox" class="messageBox"></div>
 <div id="debugInfoBox" class="debugInfoBox"></div>
 <div id="widgetTooltip" class="widgetTooltip" style="top: -1000px; left: -1000px;">
@@ -64,6 +66,19 @@ if ($_GET['load'])
   <div class="mainMenuItem" onclick="menuOpen('menuAbout')">About</div>
   <div class="mainMenuItem" onclick="menuOpen('menuGit')">Bug Reports</div>
 </div>
+<div id="menuWidgetConfig" class="menu" style="margin-top: -250px; margin-left: -205px; height: 500px; width: 400px;">
+  <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
+  <div class="buttonClose" onclick="menuExit()"></div>
+  <div id="menuWidgetConfigTitle" class="menuTitle">Bug Reports</div>
+  <div id="menuWidgetConfigModuleContainer">
+    <div id="menuWidgetConfigModules" style="position: relative;"></div>
+    <div id="menuWidgetConfigModulesLeft" class="widgetColumn" style=""></div>
+    <div id="menuWidgetConfigModulesRight" class="widgetColumn" style="left: 210px;"></div>
+  </div>
+</div>
+<div id="menuOptions" class="menu" style="margin-top:">
+
+</div>
 <div class="zoomBar" id="zoomBar">
 
 </div>
@@ -85,12 +100,15 @@ if ($_GET['load'])
   var tooltipEnabled = false;
 
   var widgets = new Widgets();
+  var modules = new ConfigModules();
   var elements = [document.getElementById("programUrl"), document.getElementById("widgetTooltip")];
   var widgetContainer = document.getElementById("widgetContainer");
+  var widgetConfigModuleContainer = {main: document.getElementById("menuWidgetConfigModuleContainer"), center: document.getElementById("menuWidgetConfigModules"), left: document.getElementById("menuWidgetConfigModulesLeft"), right: document.getElementById("menuWidgetConfigModulesRight")};
 
   var widgetList = [];
   var menuHistory = [];
   var currentMenu = null;
+  var currentWidgetConfigId = null;
 
   var Program = {};
 

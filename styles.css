@@ -1,9 +1,22 @@
 /*
 Z-indexes:
 1000: menus
-2000: dialogues
-3000: tooltip
+2000: overlay
+3000: dialogues
+4000: tooltip
 */
+.overlay
+{
+  z-index          : 2000;
+  position         : absolute;
+  top              : 0;
+  left             : 0;
+  width            : 100%;
+  height           : 100%;
+
+  background-color : rgba(99, 101, 103, 0.51);
+}
+
 .mainMenu
 {
   z-index          : 1000;
@@ -43,7 +56,7 @@ Z-indexes:
 
 .menu
 {
-  z-index                 : 2000;
+  z-index                 : 3000;
   position                : fixed;
   top                     : 50%;
   left                    : -1000px;
@@ -64,6 +77,13 @@ Z-indexes:
   font-size     : 18pt;
   text-align    : center;
   margin-bottom : 15px;
+}
+
+.menuModule
+{
+  display       : inline-block;
+  margin-bottom : 15px;
+  width         : 98%;
 }
 
 .menuButton
@@ -177,9 +197,15 @@ Z-indexes:
   position : absolute;
 }
 
+.widgetColumn
+{
+  width    : 190px;
+  position : relative;
+}
+
 .widgetTooltip
 {
-  z-index          : 3000;
+  z-index          : 4000;
   position         : absolute;
   background-color : rgba(34, 0, 22, 0.9);
   border-radius    : 5px;

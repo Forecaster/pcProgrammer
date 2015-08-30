@@ -37,7 +37,6 @@ if (!String.prototype.insert)
 if (!String.prototype.nl2br)
 {
   /**
-   *
    * @param [is_xhtml] {boolean}
    * @returns {string}
    */
