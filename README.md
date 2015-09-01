@@ -1,5 +1,5 @@
 # pcProgrammer
-https://stillmaintained.com/Forecaster/pcProgrammer.png
+[![Project Status](https://stillmaintained.com/Forecaster/pcProgrammer.png)](https://stillmaintained.com/Forecaster/pcProgrammer)
 
 A drone program viewer for PneumaticCraft for Minecraft
 
