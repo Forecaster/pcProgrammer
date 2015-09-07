@@ -195,7 +195,7 @@ function loadProgram(url)
 
         if (test == "true")
         {
-          widgetContainer.innerHTML = "";
+          widgetContainer.innerHTML = "<svg id=\"lineContainer\"></svg>";
           Program.json = content;
 
           Program.widgets = JSON.parse(Program.json).widgets;
@@ -399,7 +399,11 @@ function getWindowCenter()
 function enableWidgetTooltip(e)
 {
   var name = e.target.getAttribute("data-widget-name");
-  elements[1].children[0].innerHTML = widgets.getName(name);
+  var displayName = widgets.getName(name);
+  if (displayName == false)
+    return false;
+
+  elements[1].children[0].innerHTML = displayName;
   var tooltip = widgets.getTooltip(parseInt(e.target.id.substring(7)));
 
   if (typeof tooltip == "string")
@@ -555,4 +559,70 @@ function highlightFocus()
   element.style.backgroundColor = "red";
 
   setTimeout(function (element) {element.style.transitionDuration = null; element.style.backgroundColor = "transparent"; element.style.visibility = "collapse"}, 1000, element);
+}
+
+/**
+ * @param widgetId {Number}
+ * @param [widgetName] {String}
+ */
+function getWidgetCenterPos(widgetId, widgetName)
+{
+  if (typeof widgetId != "number" || widgetId == null)
+    throw new Error("First parameter widgetId must be a number");
+
+  var widgetArray = Program.widgets.value;
+  var thisWidget = widgetArray[widgetId];
+
+  if (typeof widgetName == "undefined" || widgetName == null)
+    widgetName = thisWidget.name.value;
+
+  return {x: (thisWidget.x.value + (widgets.getSize(widgetName).width * 0.5)), y: (thisWidget.y.value + (widgets.getSize(widgetName).height * 0.5))};
+}
+
+/**
+ * @param container {Element}
+ * @param x1 {number}
+ * @param y1 {number}
+ * @param x2 {number}
+ * @param y2 {number}
+ */
+function drawLine(container, x1, y1, x2, y2)
+{
+  var line = "<line x1=\"{0}\" y1=\"{1}\" x2=\"{2}\" y2=\"{3}\" class=\"lineConnection\" style=\"top: \{4\}; left: \{5\};\"></line>";
+
+  container.innerHTML += line.insert(0, 0, x2, y2, x1, y1);
+}
+
+/**
+ *
+ * @param originWidgetId {Number}
+ * @param targetWidgetIds {Number|Array}
+ * @param [replace] {boolean}
+ */
+function addLinesToWidget(originWidgetId, targetWidgetIds, replace)
+{
+  if (typeof replace == "undefined")
+    replace = false;
+
+  if (typeof targetWidgetIds == "number")
+    targetWidgetIds = [targetWidgetIds];
+
+  var element = document.getElementById("widget_" + originWidgetId);
+  var container = document.getElementById("lineContainer");
+  var widgetArray = Program.widgets.value;
+
+  if (replace)
+    container.innerHTML = "";
+
+  var lineStart = getWidgetCenterPos(originWidgetId);
+
+  for (var i = 0; i < targetWidgetIds.length; i++)
+  {
+    var targetWidgetId = targetWidgetIds[i];
+    var lineEnd = getWidgetCenterPos(targetWidgetId);
+
+    console.log("LineStart: x:" + lineStart.x + " y:" + lineStart.y + ", LineEnd: x:" + lineEnd.x + " y:" + lineEnd.y);
+
+    drawLine(container, lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
+  }
 }

@@ -156,6 +156,8 @@ function onMouseMove(e)
   if (e == null)
     e = window.event;
 
+  updateDebugInfo("x: " + ((parseInt(document.getElementById("widgetContainer").style.left) - e.clientX) * -1) + ", y: " + ((parseInt(document.getElementById("widgetContainer").style.top) - e.clientY) * -1));
+
   if (pan)
   {
     var changeX = e.clientX - startX;
@@ -164,8 +166,6 @@ function onMouseMove(e)
     var top = (widgetContainerStartY + changeY) + "px";
     widgetContainer.style.left = left;
     widgetContainer.style.top = top;
-
-    //updateDebugInfo("top: " + widgetContainer.style.top + ", left: " + widgetContainer.style.left + ", x: " + changeX + ", y: " + changeY);
   }
 
   if (tooltipEnabled == true)

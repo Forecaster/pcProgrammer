@@ -83,7 +83,9 @@ if ($_GET['load'])
 </div>
 <div id="menuOptions" class="menu" style="margin-top:"></div>
 <div class="zoomBar" id="zoomBar"></div>
-<div id="widgetContainer" class="widgetContainer"></div>
+<div id="widgetContainer" class="widgetContainer">
+  <svg id="lineContainer"></svg>
+</div>
 <div id="focusIndicator" class="focusIndicator" style="visibility: collapse;"></div>
 </body>
 </html>

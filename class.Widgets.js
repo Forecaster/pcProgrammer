@@ -93,7 +93,7 @@ Widgets.prototype.getName = function(name)
   if (this.widget[name])
     return this.widget[name].name;
   else
-    return "???";
+    return false;
 };
 
 /**
