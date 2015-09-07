@@ -69,7 +69,7 @@ if ($_GET['load'])
 <div id="menuWidgetConfig" class="menu" style="margin-top: -250px; margin-left: -205px; height: 500px; width: 400px;">
   <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
   <div class="buttonClose" onclick="menuExit()"></div>
-  <div id="menuWidgetConfigTitle" class="menuTitle">Bug Reports</div>
+  <div id="menuWidgetConfigTitle" class="menuTitle">menuWidgetConfigTitle</div>
   <div id="menuWidgetConfigModuleContainer">
     <div id="menuWidgetConfigModules" style="position: relative;"></div>
     <div id="menuWidgetConfigModulesLeft" class="widgetColumn" style=""></div>
