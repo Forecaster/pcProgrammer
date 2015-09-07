@@ -202,7 +202,8 @@ function widgetConfigMenu(e)
     var currentWidgetName = Program.widgets.value[currentWidgetConfigId].name.value;
     var currentWidgetData = widgets.widget[currentWidgetName];
 
-    enableWidgetConfigModules(currentWidgetConfigId, currentWidgetData.confModules, currentWidgetData.confModulesLeft, currentWidgetData.confModulesRight);
-    menuOpen("menuWidgetConfig", currentWidgetData.name);
+    var result = enableWidgetConfigModules(currentWidgetConfigId, currentWidgetData.confModules, currentWidgetData.confModulesLeft, currentWidgetData.confModulesRight);
+    if (result)
+      menuOpen("menuWidgetConfig", currentWidgetData.name);
   }
 }

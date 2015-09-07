@@ -84,6 +84,8 @@ function enableWidgetConfigModules(widgetId, center, left, right)
   widgetConfigModuleContainer.left.innerHTML = "";
   widgetConfigModuleContainer.right.innerHTML = "";
 
+  var updates = 0;
+
   if (typeof center != "undefined" && center.length > 0)
   {
     console.log(center);
@@ -92,6 +94,7 @@ function enableWidgetConfigModules(widgetId, center, left, right)
       widgetConfigModuleContainer.center.appendChild(modules.getModule(center[i]));
     }
     modules.updateConfigFields(center, widgetId);
+    updates += 1;
   }
 
   if (typeof left != "undefined" && left.length > 0)
@@ -102,6 +105,7 @@ function enableWidgetConfigModules(widgetId, center, left, right)
       widgetConfigModuleContainer.left.appendChild(modules.getModule(left[i]));
     }
     modules.updateConfigFields(left, widgetId);
+    updates += 1;
   }
 
   if (typeof right != "undefined" && right.length > 0)
@@ -112,7 +116,12 @@ function enableWidgetConfigModules(widgetId, center, left, right)
       widgetConfigModuleContainer.right.appendChild(modules.getModule(right[i]));
     }
     modules.updateConfigFields(right, widgetId);
+    updates += 1;
   }
+
+  return updates != 0;
+
+
 }
 //</editor-fold>
 
