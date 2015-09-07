@@ -23,7 +23,7 @@ if ($_GET['load'])
   $p = $_GET['load'];
 ?>
 
-<body style="overflow: hidden;">
+<body style="overflow: hidden; height: 0;">
 <div id="overlay" class="overlay" style="visibility: collapse;"></div>
 <div id="messageBox" class="messageBox"></div>
 <div id="debugInfoBox" class="debugInfoBox"></div>

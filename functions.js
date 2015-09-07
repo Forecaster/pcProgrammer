@@ -80,7 +80,6 @@ function menuBack()
 function enableWidgetConfigModules(widgetId, center, left, right)
 {
   var i;
-  var y;
   widgetConfigModuleContainer.center.innerHTML = "";
   widgetConfigModuleContainer.left.innerHTML = "";
   widgetConfigModuleContainer.right.innerHTML = "";

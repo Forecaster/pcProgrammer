@@ -22,12 +22,12 @@ document.onkeyup = onKeyUp;
 document.onmousemove = onMouseMove;
 document.oncontextmenu = onContextMenu;
 
-var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"; //FF doesn't recognize mousewheel as of FF3.x
+var mouseWheelEvent=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel"; //FF doesn't recognize mousewheel as of FF3.x
 
 if (document.attachEvent) //if IE (and Opera depending on user setting)
-  document.attachEvent("on"+mousewheelevt, onMouseWheel);
+  document.attachEvent("on"+mouseWheelEvent, onMouseWheel);
 else if (document.addEventListener) //WC3 browsers
-  document.addEventListener(mousewheelevt, onMouseWheel, false);
+  document.addEventListener(mouseWheelEvent, onMouseWheel, false);
 
 function extractNumber(value)
 {
