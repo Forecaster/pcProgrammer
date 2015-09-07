@@ -104,9 +104,9 @@ Widgets.prototype.getTooltip = function(id)
 {
   if (id != undefined && id != null)
   {
-    if (typeof Program.widgets.value[id].name.value == "undefined")
+    if (typeof Program.widgets.value[id] == "undefined" || typeof Program.widgets.value[id].name.value == "undefined")
       return false;
-    
+
     var name = Program.widgets.value[id].name.value;
     var widgetArray = Program.widgets.value;
     var thisWidget = widgetArray[id];
