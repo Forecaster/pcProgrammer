@@ -28,7 +28,6 @@ function showMenu(id, title)
       {
         if (subChild[z].tagName == "INPUT")
         {
-          console.log("Focusing on " + subChild[z].tagName + " " + subChild[z].id);
           subChild[z].focus();
           z = subChild.length;
         }
@@ -36,7 +35,6 @@ function showMenu(id, title)
     }
     else if (children[i].tagName == "INPUT")
     {
-      console.log("Focusing on " + children[i].tagName + " " + children[i].id);
       children[i].focus();
       i = children.length;
     }
