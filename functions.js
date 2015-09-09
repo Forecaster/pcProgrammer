@@ -12,10 +12,35 @@ function disableOverlay()
 function showMenu(id, title)
 {
   var target = document.getElementById(id);
-  var titletarget = document.getElementById(id + "Title");
+  var titleTarget = document.getElementById(id + "Title");
 
   if (typeof title != "undefined")
-    titletarget.innerHTML = title;
+    titleTarget.innerHTML = title;
+
+  var children = target.childNodes;
+
+  for (var i = 0; i < children.length; i++)
+  {
+    if (children[i].tagName == "DIV")
+    {
+      var subChild = children[i].childNodes;
+      for (var z = 0; z < subChild.length; z++)
+      {
+        if (subChild[z].tagName == "INPUT")
+        {
+          console.log("Focusing on " + subChild[z].tagName + " " + subChild[z].id);
+          subChild[z].focus();
+          z = subChild.length;
+        }
+      }
+    }
+    else if (children[i].tagName == "INPUT")
+    {
+      console.log("Focusing on " + children[i].tagName + " " + children[i].id);
+      children[i].focus();
+      i = children.length;
+    }
+  }
 
   target.style.left = "50%";
 }
