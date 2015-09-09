@@ -584,9 +584,25 @@ function highlightFocus()
   setTimeout(function (element) {element.style.transitionDuration = null; element.style.backgroundColor = "transparent"; element.style.visibility = "collapse"}, 1000, element);
 }
 
+function getWidgetCurrentSize(widgetId)
+{
+  var element = document.getElementById("widget_"+widgetId);
+
+  return {width: parseInt(element.style.width), height: parseInt(element.style.height)};
+}
+
+function getWidgetPos(widgetId)
+{
+  var widgetArray = Program.widgets.value;
+  var thisWidget = widgetArray[widgetId];
+
+  return {x: thisWidget.x.value, y: thisWidget.y.value};
+}
+
 /**
  * @param widgetId {Number}
  * @param [widgetName] {String}
+ * @returns {{x: Number, y: Number}}
  */
 function getWidgetCenterPos(widgetId, widgetName)
 {
@@ -599,21 +615,29 @@ function getWidgetCenterPos(widgetId, widgetName)
   if (typeof widgetName == "undefined" || widgetName == null)
     widgetName = thisWidget.name.value;
 
-  return {x: (thisWidget.x.value + (widgets.getSize(widgetName).width * 0.5)), y: (thisWidget.y.value + (widgets.getSize(widgetName).height * 0.5))};
+  return {x: (getWidgetPos(widgetId).x + (getWidgetCurrentSize(widgetId).width * 0.5)), y: (getWidgetPos(widgetId).y + (getWidgetCurrentSize(widgetId).height * 0.5))};
 }
 
 /**
- * @param container {Element}
- * @param x1 {number}
- * @param y1 {number}
- * @param x2 {number}
- * @param y2 {number}
+ *
+ * @param x1 {Number}
+ * @param y1 {Number}
+ * @param x2 {Number}
+ * @param y2 {Number}
+ * @param [container] {Element}
+ * @returns {boolean}
  */
-function drawLine(container, x1, y1, x2, y2)
+function drawLine(x1, y1, x2, y2, container)
 {
-  var line = "<line x1=\"{0}\" y1=\"{1}\" x2=\"{2}\" y2=\"{3}\" class=\"lineConnection\" style=\"top: \{4\}; left: \{5\};\"></line>";
+  if (typeof x1 == "undefined" || typeof y1 == "undefined" || typeof x2 == "undefined" || typeof y2 == "undefined")
+    return false;
+  if (typeof container == "undefined")
+    container = document.getElementById("lineContainer");
 
-  container.innerHTML += line.insert(0, 0, x2, y2, x1, y1);
+  var line = "<line x1=\"{0}\" y1=\"{1}\" x2=\"{2}\" y2=\"{3}\" class=\"lineConnection\"></line>";
+
+  container.innerHTML += line.insert(x1, y1, x2, y2);
+  return true;
 }
 
 /**
@@ -646,6 +670,6 @@ function addLinesToWidget(originWidgetId, targetWidgetIds, replace)
 
     console.log("LineStart: x:" + lineStart.x + " y:" + lineStart.y + ", LineEnd: x:" + lineEnd.x + " y:" + lineEnd.y);
 
-    drawLine(container, lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
+    drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y, container);
   }
 }

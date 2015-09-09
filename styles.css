@@ -195,6 +195,9 @@ Z-indexes:
 .widgetContainer
 {
   position : absolute;
+  width    : 0;
+  height   : 0;
+  overflow : visible;
 }
 
 .widgetColumn
@@ -273,8 +276,6 @@ Z-indexes:
 
 svg
 {
-  width    : 0;
-  height   : 0;
   overflow : visible;
 }
 
