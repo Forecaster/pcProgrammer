@@ -239,3 +239,23 @@ Widgets.prototype.getOrder = function(order)
     case 2: return "High to Low";
   }
 };
+
+/**
+ * @param parentPosition {Position}
+ * @param argumentNumber {Number}
+ * @param widgetId {Number}
+ */
+Widgets.prototype.getArgumentPosition = function(parentPosition, argumentNumber, widgetId)
+{
+  if (typeof parentPosition == "undefined" || typeof argumentNumber == "undefined" || typeof widgetId == "undefined")
+    throw new Error("Not enough arguments");
+
+  if (typeof parentPosition != "POSITION")
+    throw new TypeError("parentPosition must be instance of Position");
+  if (typeof argumentNumber != "NUMBER")
+    throw new TypeError("argumentNumber must be number");
+  if (typeof widgetId != "NUMBER")
+    throw new TypeError("widgetId must be number");
+
+  
+};

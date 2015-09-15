@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <title>PneumaticCraft Program Viewer</title>
   <link rel="stylesheet" href="styles.css"/>
-  <script src="class.Widgets.js"></script>
-  <script src="class.ConfigModules.js"></script>
   <script src="functions.js"></script>
   <script src="functions_buttons.js"></script>
   <script src="mouse_key_events.js"></script>
   <script src="prototypes.js"></script>
+
+  <script src="class.Widgets.js"></script>
+  <script src="class.ConfigModules.js"></script>
+  <script src="class.Position.js"></script>
 
   <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>

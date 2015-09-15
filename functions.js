@@ -207,6 +207,12 @@ function applicationReset()
  */
 function loadProgram(url)
 {
+  if (typeof url == "undefined" || url == "" || url == "<? echo $p;?>")
+  {
+    console.log("Url not set");
+    return false;
+  }
+
   $.post("get.program.php", {url: url})
       .done(function (payload)
       {
@@ -258,6 +264,7 @@ function loadProgram(url)
         else
         {
           console.warn(content);
+          console.log("Test returned " + test + " for url \"" + url + "\"");
           addMessage("An error occurred!");
         }
       })
