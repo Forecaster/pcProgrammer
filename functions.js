@@ -259,7 +259,9 @@ function loadProgram(url)
             applicationReset();
           }
 
-          console.log(Program.widgets);
+          console.log("Program.widgets.value:");
+          console.log(Program.widgets.value);
+          updateWidgetPositionList();
         }
         else
         {
@@ -679,4 +681,46 @@ function addLinesToWidget(originWidgetId, targetWidgetIds, replace)
 
     drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y, container);
   }
+}
+
+//noinspection UnterminatedStatementJS
+function updateWidgetPositionList()
+{
+  widgetPositionList = [];
+  var widgetArray = Program.widgets.value;
+
+  for (var i = 0; i < widgetArray.length; i++)
+  {
+    var widget = widgetArray[i];
+    var x = widget.x.value;
+    var y = widget.y.value;
+    var id = i;
+    var entry = {};
+
+    if (typeof widgetPositionList[y] != "undefined")
+    {
+      entry[x] = id;
+      widgetPositionList[y] = mergeObjects(widgetPositionList[y], entry);
+    }
+    else
+    {
+      entry[y][x] = id;
+      widgetPositionList = mergeObjects(widgetPositionList, entry);
+    }
+  }
+}
+
+/**
+ * Overwrites obj1's values with obj2's and adds obj2's if non existent in obj1
+ * http://stackoverflow.com/a/171256
+ * @param obj1 {Object}
+ * @param obj2 {Object}
+ * @returns {Object} a new object based on obj1 and obj2
+ */
+function mergeObjects(obj1, obj2)
+{
+  var obj3 = {};
+  for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+  for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+  return obj3;
 }

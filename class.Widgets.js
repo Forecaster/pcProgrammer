@@ -244,21 +244,55 @@ Widgets.prototype.getOrder = function(order)
 };
 
 /**
- * @param parentPosition {Position}
- * @param argumentNumber {Number}
- * @param widgetId {Number}
+ * @param argumentCount {Number}
+ * @param originX {Number}
+ * @param originY {Number}
+ * @param side {"left"|"right"}
  */
-Widgets.prototype.getArgumentPosition = function(parentPosition, argumentNumber, widgetId)
+Widgets.prototype.getArgumentsForSide = function(argumentCount, originX, originY, side)
 {
-  if (typeof parentPosition == "undefined" || typeof argumentNumber == "undefined" || typeof widgetId == "undefined")
-    throw new Error("Not enough arguments");
+  if (typeof originX == "undefined" || typeof originY == "undefined" || typeof side == "undefined")
+    throw new TypeError("Not enough arguments");
 
-  if (typeof parentPosition != "POSITION")
-    throw new TypeError("parentPosition must be instance of Position");
-  if (typeof argumentNumber != "NUMBER")
-    throw new TypeError("argumentNumber must be number");
-  if (typeof widgetId != "NUMBER")
-    throw new TypeError("widgetId must be number");
+  var outOfArguments = false;
 
-  
+  for (var argumentCounter = 0; argumentCounter < argumentCount; argumentCounter++)
+  {
+    var argumentX;
+    if (side == "left")
+      argumentX = originX - ((argumentCounter + 1) * this.argumentOffsetX);
+    else if (side == "right")
+      argumentX = originX + ((argumentCounter + 1) * this.argumentOffsetX);
+
+    console.log("Looking for argument at x: " + argumentX + ", y: " + originY);
+  }
+};
+
+Widgets.prototype.getArgument = function(parentWidgetId)
+{
+  var argumentsLeft = [];
+  var argumentsRight = [];
+
+  var widgetArray = Program.widgets.value;
+  var thisWidget = widgetArray[parentWidgetId];
+  var thisWidgetName = thisWidget.name.value;
+  var thisWidgetArgumentsLeft = thisWidget.argumentsLeft;
+  var thisWidgetArgumentsRight = thisWidget.argumentsRight;
+
+  if (thisWidgetArgumentsLeft.length == 0 && thisWidgetArgumentsRight.length == 0)
+    return false;
+
+  if (thisWidgetArgumentsLeft.length != 0)
+  {
+    for (var argumentsIndex = 0; argumentsIndex < thisWidgetArgumentsLeft.length; argumentsIndex++)
+    {
+      var argumentYOffset = (argumentsIndex + 1) * 44;
+      var outOfArguments = false;
+
+      while (!outOfArguments)
+      {
+
+      }
+    }
+  }
 };

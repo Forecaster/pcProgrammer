@@ -117,6 +117,7 @@ if ($_GET['load'])
   var menuHistory = [];
   var currentMenu = null;
   var currentWidgetConfigId = null;
+  var widgetPositionList;
 
   var Program = {};
 
