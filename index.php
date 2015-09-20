@@ -5,6 +5,7 @@
   <title>PneumaticCraft Program Viewer</title>
   <link rel="stylesheet" href="styles.css"/>
   <script src="functions.js"></script>
+  <script src="functions_utility.js"></script>
   <script src="functions_buttons.js"></script>
   <script src="mouse_key_events.js"></script>
   <script src="prototypes.js"></script>
