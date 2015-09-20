@@ -268,7 +268,7 @@ Widgets.prototype.getArgumentsForSide = function(argumentCount, originX, originY
   }
 };
 
-Widgets.prototype.getArgument = function(parentWidgetId)
+Widgets.prototype.getArguments = function(parentWidgetId)
 {
   var argumentsLeft = [];
   var argumentsRight = [];

@@ -676,7 +676,6 @@ function addLinesToWidget(originWidgetId, targetWidgetIds, replace)
   }
 }
 
-//noinspection UnterminatedStatementJS
 function updateWidgetPositionList()
 {
   widgetPositionList = [];
@@ -688,17 +687,10 @@ function updateWidgetPositionList()
     var x = widget.x.value;
     var y = widget.y.value;
     var id = i;
-    var entry = {};
 
-    if (typeof widgetPositionList[y] != "undefined")
-    {
-      entry[x] = id;
-      widgetPositionList[y] = mergeObjects(widgetPositionList[y], entry);
-    }
-    else
-    {
-      entry[y][x] = id;
-      widgetPositionList = mergeObjects(widgetPositionList, entry);
-    }
+    if (typeof widgetPositionList[y] == "undefined")
+      widgetPositionList[y] = [];
+
+    widgetPositionList[y][x] = id;
   }
 }
