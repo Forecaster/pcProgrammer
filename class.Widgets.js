@@ -65,7 +65,7 @@ function Widgets(baseDir)
   this.widget["text"]                               = {sprite: "textPiece.png"                          ,width: 80, height: 44,  name: "Text",                         confModules: ["text"], confModulesLeft: [], confModulesRight: [],                                              desc: "Value: {0}",                                                       argumentsLeft: ["text"], argumentsRight: ["text"]};
   this.widget["wait"]                               = {sprite: "waitPiece.png"                          ,width: 80, height: 64,  name: "Wait",                         confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: ["text"]};
 
-  this.argumentOffsetX = 60;
+  this.argumentOffsetX = 15;
   this.argumentOffsetY = 44;
 }
 
@@ -243,29 +243,39 @@ Widgets.prototype.getOrder = function(order)
   }
 };
 
+Widgets.prototype.getArgumentsForSide2 = function(argumentCount, widgetId, side)
+{
+  var originX = Program.widgets.value[widgetId].x.value;
+  var originY = Program.widgets.value[widgetId].y.value;
+
+  return this.getArgumentsForSide(argumentCount, originX, originY, side);
+};
+
 /**
- * @param argumentCount {Number}
+ * @param argumentNumber {Number}
  * @param originX {Number}
  * @param originY {Number}
  * @param side {"left"|"right"}
+ * @return {Object}
  */
-Widgets.prototype.getArgumentsForSide = function(argumentCount, originX, originY, side)
+Widgets.prototype.getArgumentsForSide = function(argumentNumber, originX, originY, side)
 {
   if (typeof originX == "undefined" || typeof originY == "undefined" || typeof side == "undefined")
     throw new TypeError("Not enough arguments");
 
-  var outOfArguments = false;
-
-  for (var argumentCounter = 0; argumentCounter < argumentCount; argumentCounter++)
+  var argumentX;
+  if (side == "left")
   {
-    var argumentX;
-    if (side == "left")
-      argumentX = originX - ((argumentCounter + 1) * this.argumentOffsetX);
-    else if (side == "right")
-      argumentX = originX + ((argumentCounter + 1) * this.argumentOffsetX);
-
-    console.log("Looking for argument at x: " + argumentX + ", y: " + originY);
+    console.log("Left: argumentX = "+originX+" - "+"(("+argumentNumber+" + 1) * "+this.argumentOffsetX+");");
+    argumentX = originX - ((argumentNumber + 1) * this.argumentOffsetX);
   }
+  else if (side == "right")
+  {
+    console.log("Right: argumentX = "+originX+" + "+"(("+argumentNumber+" + 1) * "+this.argumentOffsetX+");");
+    argumentX = originX + ((argumentNumber + 1) * this.argumentOffsetX);
+  }
+
+  return {x: argumentX, y: originY};
 };
 
 Widgets.prototype.getArguments = function(parentWidgetId)
@@ -276,23 +286,57 @@ Widgets.prototype.getArguments = function(parentWidgetId)
   var widgetArray = Program.widgets.value;
   var thisWidget = widgetArray[parentWidgetId];
   var thisWidgetName = thisWidget.name.value;
-  var thisWidgetArgumentsLeft = thisWidget.argumentsLeft;
-  var thisWidgetArgumentsRight = thisWidget.argumentsRight;
+  var thisWidgetArgumentsLeft = this.widget[thisWidgetName].argumentsLeft;
+  var thisWidgetArgumentsRight = this.widget[thisWidgetName].argumentsRight;
+  var thisWidgetX = thisWidget.x.value;
+  var thisWidgetY = thisWidget.y.value;
 
   if (thisWidgetArgumentsLeft.length == 0 && thisWidgetArgumentsRight.length == 0)
     return false;
 
-  if (thisWidgetArgumentsLeft.length != 0)
+  var argumentYPosition;
+  var argumentXPosition = 0;
+  var argumentYOffset;
+  var outOfArguments;
+  var argumentPos;
+
+  console.log("Iterating through " + thisWidgetArgumentsLeft.length + " left arguments");
+  for (argumentYPosition = 0; argumentYPosition < thisWidgetArgumentsLeft.length; argumentYPosition++)
   {
-    for (var argumentsIndex = 0; argumentsIndex < thisWidgetArgumentsLeft.length; argumentsIndex++)
+    argumentYOffset = (argumentYPosition + 1) * this.argumentOffsetY;
+    outOfArguments = false;
+    while (!outOfArguments)
     {
-      var argumentYOffset = (argumentsIndex + 1) * 44;
-      var outOfArguments = false;
+      argumentPos = this.getArgumentsForSide2(argumentXPosition, parentWidgetId, "left");
 
-      while (!outOfArguments)
-      {
-
-      }
+      if (typeof widgetPositionList != "undefined" &&  typeof widgetPositionList[argumentPos.y] != "undefined" && typeof widgetPositionList[argumentPos.y][argumentPos.x] != "undefined")
+        argumentsLeft.push(widgetPositionList[argumentPos.y][argumentPos.x]);
+      else
+        outOfArguments = true;
+      console.log("Testing position y" + argumentPos.y + " x" + argumentPos.x + " Result: " + outOfArguments);
+      argumentXPosition++;
     }
   }
+
+  argumentXPosition = 0;
+
+  console.log("Iterating through " + thisWidgetArgumentsRight.length + " right arguments");
+  for (argumentYPosition = 0; argumentYPosition < thisWidgetArgumentsRight.length; argumentYPosition++)
+  {
+    argumentYOffset = (argumentYPosition + 1) * this.argumentOffsetY;
+    outOfArguments = false;
+    while (!outOfArguments)
+    {
+      argumentPos = this.getArgumentsForSide2(argumentXPosition, parentWidgetId, "right");
+
+      if (typeof widgetPositionList != "undefined" &&  typeof widgetPositionList[argumentPos.y] != "undefined" && typeof widgetPositionList[argumentPos.y][argumentPos.x] != "undefined")
+        argumentsRight.push(widgetPositionList[argumentPos.y][argumentPos.x]);
+      else
+        outOfArguments = true;
+      console.log("Testing position y" + argumentPos.y + " x" + argumentPos.x + " Result: " + outOfArguments);
+      argumentXPosition++;
+    }
+  }
+
+  return [argumentsLeft, argumentsRight];
 };
