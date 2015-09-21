@@ -461,7 +461,6 @@ function focusOnWidgetPos(widgetId)
 
   var widgetSize = widgets.getSize(thisWidget.name.value);
 
-  console.log(widgetSize);
   if (typeof widgetSize != "undefined" && widgetSize != false)
   {
     newX = screenCenterX + (widgetX * -1) - (widgetSize.width * (currentScale * defaultSpriteScale * 0.5));
