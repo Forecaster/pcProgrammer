@@ -12,10 +12,33 @@ function disableOverlay()
 function showMenu(id, title)
 {
   var target = document.getElementById(id);
-  var titletarget = document.getElementById(id + "Title");
+  var titleTarget = document.getElementById(id + "Title");
 
   if (typeof title != "undefined")
-    titletarget.innerHTML = title;
+    titleTarget.innerHTML = title;
+
+  var children = target.childNodes;
+
+  for (var i = 0; i < children.length; i++)
+  {
+    if (children[i].tagName == "DIV")
+    {
+      var subChild = children[i].childNodes;
+      for (var z = 0; z < subChild.length; z++)
+      {
+        if (subChild[z].tagName == "INPUT")
+        {
+          subChild[z].focus();
+          z = subChild.length;
+        }
+      }
+    }
+    else if (children[i].tagName == "INPUT")
+    {
+      children[i].focus();
+      i = children.length;
+    }
+  }
 
   target.style.left = "50%";
 }
@@ -184,57 +207,27 @@ function applicationReset()
  */
 function loadProgram(url)
 {
+  if (typeof url == "undefined" || url == "" || url == "<? echo $p;?>")
+  {
+    console.log("Url not set");
+    return false;
+  }
+
   $.post("get.program.php", {url: url})
       .done(function (payload)
       {
         payload = payload.split(";");
         var test = payload[0];
         var content = payload[1];
-        var successes = 0;
-        var failures = 0;
 
         if (test == "true")
         {
-          widgetContainer.innerHTML = "";
-          Program.json = content;
-
-          Program.widgets = JSON.parse(Program.json).widgets;
-
-          var widgets = Program.widgets.value;
-
-          for (var i = 0; i < widgets.length; i++)
-          {
-            var object = widgets[i];
-
-            var altTexture = false;
-            if (object["multiplyDivide"])
-              altTexture = object["multiplyDivide"].value;
-
-            var result = createWidget(object.name.value, i, altTexture, object.x.value, object.y.value, defaultSpriteScale);
-
-            if (result)
-              successes++;
-            else
-            {
-              failures++;
-              console.warn("Failed to create piece \"" + object.name.value + "\"");
-            }
-          }
-          if (failures > 0)
-          {
-            addMessage("The program was loaded! Failed to load " + failures + " pieces!");
-          }
-          else
-          {
-            addMessage("The program was loaded!");
-            applicationReset();
-          }
-
-          console.log(Program.widgets);
+          parseProgramFromJson(content);
         }
         else
         {
           console.warn(content);
+          console.log("Test returned " + test + " for url \"" + url + "\"");
           addMessage("An error occurred!");
         }
       })
@@ -243,6 +236,54 @@ function loadProgram(url)
         console.warn("An error prevented the request from being sent (" + payload.status + ")");
         addMessage("An error prevented the request from being sent (" + payload.status + ")");
       });
+}
+
+/**
+ * Attempts to parse a json string into a program object
+ * @param program {String}
+ */
+function parseProgramFromJson(program)
+{
+  var successes = 0;
+  var failures = 0;
+  widgetContainer.innerHTML = "<svg id=\"lineContainer\"></svg>";
+  Program.json = program;
+
+  Program.widgets = JSON.parse(Program.json).widgets;
+
+  var widgets = Program.widgets.value;
+
+  for (var i = 0; i < widgets.length; i++)
+  {
+    var object = widgets[i];
+
+    var altTexture = false;
+    if (object["multiplyDivide"])
+      altTexture = object["multiplyDivide"].value;
+
+    var result = createWidget(object.name.value, i, altTexture, object.x.value, object.y.value, defaultSpriteScale);
+
+    if (result)
+      successes++;
+    else
+    {
+      failures++;
+      console.warn("Failed to create piece \"" + object.name.value + "\"");
+    }
+  }
+  if (failures > 0)
+  {
+    addMessage("The program was loaded! Failed to load " + failures + " pieces!");
+  }
+  else
+  {
+    addMessage("The program was loaded!");
+    applicationReset();
+  }
+
+  console.log("Program.widgets.value:");
+  console.log(Program.widgets.value);
+  updateWidgetPositionList();
 }
 
 /**
@@ -378,13 +419,6 @@ function convertDataType(type)
   }
 }
 
-function updateDebugInfo(text)
-{
-  var element = document.getElementById("debugInfoBox");
-
-  element.innerHTML = text;
-}
-
 function centerWidgetContainer()
 {
   widgetContainer.style.top = window.innerHeight * .5 + "px";
@@ -399,7 +433,11 @@ function getWindowCenter()
 function enableWidgetTooltip(e)
 {
   var name = e.target.getAttribute("data-widget-name");
-  elements[1].children[0].innerHTML = widgets.getName(name);
+  var displayName = widgets.getName(name);
+  if (displayName == false)
+    return false;
+
+  elements[1].children[0].innerHTML = displayName;
   var tooltip = widgets.getTooltip(parseInt(e.target.id.substring(7)));
 
   if (typeof tooltip == "string")
@@ -432,7 +470,6 @@ function focusOnWidgetPos(widgetId)
 
   var widgetSize = widgets.getSize(thisWidget.name.value);
 
-  console.log(widgetSize);
   if (typeof widgetSize != "undefined" && widgetSize != false)
   {
     newX = screenCenterX + (widgetX * -1) - (widgetSize.width * (currentScale * defaultSpriteScale * 0.5));
@@ -555,4 +592,113 @@ function highlightFocus()
   element.style.backgroundColor = "red";
 
   setTimeout(function (element) {element.style.transitionDuration = null; element.style.backgroundColor = "transparent"; element.style.visibility = "collapse"}, 1000, element);
+}
+
+function getWidgetCurrentSize(widgetId)
+{
+  var element = document.getElementById("widget_"+widgetId);
+
+  return {width: parseInt(element.style.width), height: parseInt(element.style.height)};
+}
+
+function getWidgetPos(widgetId)
+{
+  var widgetArray = Program.widgets.value;
+  var thisWidget = widgetArray[widgetId];
+
+  return {x: thisWidget.x.value, y: thisWidget.y.value};
+}
+
+/**
+ * @param widgetId {Number}
+ * @param [widgetName] {String}
+ * @returns {{x: Number, y: Number}}
+ */
+function getWidgetCenterPos(widgetId, widgetName)
+{
+  if (typeof widgetId != "number" || widgetId == null)
+    throw new Error("First parameter widgetId must be a number");
+
+  var widgetArray = Program.widgets.value;
+  var thisWidget = widgetArray[widgetId];
+
+  if (typeof widgetName == "undefined" || widgetName == null)
+    widgetName = thisWidget.name.value;
+
+  return {x: (getWidgetPos(widgetId).x + (getWidgetCurrentSize(widgetId).width * 0.5)), y: (getWidgetPos(widgetId).y + (getWidgetCurrentSize(widgetId).height * 0.5))};
+}
+
+/**
+ *
+ * @param x1 {Number}
+ * @param y1 {Number}
+ * @param x2 {Number}
+ * @param y2 {Number}
+ * @param [container] {Element}
+ * @returns {boolean}
+ */
+function drawLine(x1, y1, x2, y2, container)
+{
+  if (typeof x1 == "undefined" || typeof y1 == "undefined" || typeof x2 == "undefined" || typeof y2 == "undefined")
+    return false;
+  if (typeof container == "undefined")
+    container = document.getElementById("lineContainer");
+
+  var line = "<line x1=\"{0}\" y1=\"{1}\" x2=\"{2}\" y2=\"{3}\" class=\"lineConnection\"></line>";
+
+  container.innerHTML += line.insert(x1, y1, x2, y2);
+  return true;
+}
+
+/**
+ *
+ * @param originWidgetId {Number}
+ * @param targetWidgetIds {Number|Array}
+ * @param [replace] {boolean}
+ */
+function addLinesToWidget(originWidgetId, targetWidgetIds, replace)
+{
+  if (typeof replace == "undefined")
+    replace = false;
+
+  if (typeof targetWidgetIds == "number")
+    targetWidgetIds = [targetWidgetIds];
+
+  var element = document.getElementById("widget_" + originWidgetId);
+  var container = document.getElementById("lineContainer");
+  var widgetArray = Program.widgets.value;
+
+  if (replace)
+    container.innerHTML = "";
+
+  var lineStart = getWidgetCenterPos(originWidgetId);
+
+  for (var i = 0; i < targetWidgetIds.length; i++)
+  {
+    var targetWidgetId = targetWidgetIds[i];
+    var lineEnd = getWidgetCenterPos(targetWidgetId);
+
+    console.log("LineStart: x:" + lineStart.x + " y:" + lineStart.y + ", LineEnd: x:" + lineEnd.x + " y:" + lineEnd.y);
+
+    drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y, container);
+  }
+}
+
+function updateWidgetPositionList()
+{
+  widgetPositionList = [];
+  var widgetArray = Program.widgets.value;
+
+  for (var i = 0; i < widgetArray.length; i++)
+  {
+    var widget = widgetArray[i];
+    var x = widget.x.value;
+    var y = widget.y.value;
+    var id = i;
+
+    if (typeof widgetPositionList[y] == "undefined")
+      widgetPositionList[y] = [];
+
+    widgetPositionList[y][x] = id;
+  }
 }

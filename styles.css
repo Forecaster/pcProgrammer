@@ -7,7 +7,7 @@ Z-indexes:
 */
 .overlay
 {
-  z-index          : 10000;
+  z-index          : 20000;
   position         : absolute;
   top              : 0;
   left             : 0;
@@ -195,6 +195,9 @@ Z-indexes:
 .widgetContainer
 {
   position : absolute;
+  width    : 0;
+  height   : 0;
+  overflow : visible;
 }
 
 .widgetColumn
@@ -269,4 +272,20 @@ Z-indexes:
   transition-property        : background-color, visibility;
   transition-duration        : 2s, 2s;
   transition-timing-function : ease, step-end;
+}
+
+svg
+{
+  overflow : visible;
+  position : relative;
+  width    : 0;
+  height   : 0;
+}
+
+.lineConnection
+{
+  z-index      : 30000;
+  position     : relative;
+  stroke       : black;
+  stroke-width : 2px;
 }

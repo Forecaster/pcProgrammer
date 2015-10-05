@@ -6,64 +6,67 @@ function Widgets(baseDir)
     this.baseDir = "progwidgets/";
   
   this.widget = {};
-  this.widget["area"]                               = {sprite: "areaPiece.png"                          ,width: 80, height: 44,  name: "Area",                         confModules: ["area", "areaType", "extraParameter"], confModulesLeft: [], confModulesRight: [],                desc: "Area type: {0}"};
-  this.widget["entityAttack"]                       = {sprite: "attackPiece.png"                        ,width: 80, height: 108, name: "Entity Attack",                confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["blockRightClick"]                    = {sprite: "blockRightClickPiece.png"               ,width: 80, height: 108, name: "Right Click Block",            confModules: [], confModulesLeft: ["order", "direction"], confModulesRight: ["sneaking", "limitInteractions"], desc: "Order: {0}\nPlacing direction: {1}"};
-  this.widget["comment"]                            = {sprite: "commentPiece.png"                       ,width: 80, height: 64,  name: "Comment",                      confModules: ["text"], confModulesLeft: [], confModulesRight: [],                                              desc: "{0}"};
-  this.widget["computerCraft"]                      = {sprite: "computerCraftPiece.png"                 ,width: 80, height: 64,  name: "Computer Control",             confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["conditionBlock"]                     = {sprite: "conditionBlockPiece.png"                ,width: 80, height: 152, name: "Condition: Block",             confModules: [], confModulesLeft: ["anyAllBlocks"], confModulesRight: [],                                      desc: "{0} >= 1"};
-  this.widget["conditionCoordinate"]                = {sprite: "conditionCoordinatePiece.png"           ,width: 80, height: 152, name: "Condition: Coordinate",        confModules: [], confModulesLeft: ["XYZ"], confModulesRight: ["equalsGreater"],                                desc: "Condition: \"{0}\""};
-  this.widget["droneConditionEntity"]               = {sprite: "conditionDroneEntityPiece.png"          ,width: 80, height: 108, name: "Drone Condition: Entity",      confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["conditionDroneEssentia"]             = {sprite: "conditionDroneEssentiaPiece.png"        ,width: 80, height: 108, name: "Drone Condition: Essentia",    confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["droneConditionItem"]                 = {sprite: "conditionDroneInventoryPiece.png"       ,width: 80, height: 108, name: "Drone Condition: Items",       confModules: [], confModulesLeft: ["equalsGreaterParam"], confModulesRight: [],                                desc: ""};
-  this.widget["droneConditionLiquid"]               = {sprite: "conditionDroneLiquidPiece.png"          ,width: 80, height: 108, name: "Drone Condition: Liquid",      confModules: [], confModulesLeft: ["equalsGreaterParam"], confModulesRight: [],                                desc: ""};
-  this.widget["droneConditionPressure"]             = {sprite: "conditionDronePressurePiece.png"        ,width: 80, height: 64,  name: "Drone Condition: Pressure",    confModules: [], confModulesLeft: ["equalsGreaterParam"], confModulesRight: [],                                desc: ""};
-  this.widget["droneConditionRF"]                   = {sprite: "conditionDroneRFPiece.png"              ,width: 80, height: 64,  name: "Drone Condition: RF",          confModules: [], confModulesLeft: [], confModulesRight: ["equalsGreaterParam"],                                desc: ""};
-  this.widget["conditionEntity"]                    = {sprite: "conditionEntityPiece.png"               ,width: 80, height: 152, name: "Condition: Entity",            confModules: [], confModulesLeft: ["equalsGreaterParam"], confModulesRight: [],                                desc: "{0}"};
-  this.widget["conditionEssentia"]                  = {sprite: "conditionEssentiaPiece.png"             ,width: 80, height: 152, name: "Condition: Essentia",          confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["conditionItem"]                      = {sprite: "conditionItem.png"                      ,width: 80, height: 152, name: "Drone Condition: Item Filter", confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["conditionItemInventory"]             = {sprite: "conditionItemInventoryPiece.png"        ,width: 80, height: 152, name: "Condition: Items",             confModules: [], confModulesLeft: ["sides"], confModulesRight: ["anyAllBlocks", "equalsGreaterParam"],         desc: "Accessing sides:\n{0}\n{1}"};
-  this.widget["conditionLiquidInventory"]           = {sprite: "conditionLiquidInventoryPiece.png"      ,width: 80, height: 152, name: "Condition: Liquid",            confModules: [], confModulesLeft: ["sides"], confModulesRight: ["anyAllBlocks", "equalsGreaterParam"],         desc: "Accessing sides:\n{0}\n{1}"};
-  this.widget["conditionPressure"]                  = {sprite: "conditionPressurePiece.png"             ,width: 80, height: 108, name: "Condition: Pressure",          confModules: [], confModulesLeft: ["sides"], confModulesRight: ["anyAllBlocks", "equalsGreaterParam"],         desc: "Accessing sides:\n{0}\n{1}"};
-  this.widget["conditionRedstone"]                  = {sprite: "conditionRedstonePiece.png"             ,width: 80, height: 108, name: "Condition: Redstone",          confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "Accessing sides:\n{0}\n{1}"};
-  this.widget["conditionRF"]                        = {sprite: "conditionRFPiece.png"                   ,width: 80, height: 108, name: "Condition: RF",                confModules: [], confModulesLeft: ["sides"], confModulesRight: ["anyAllBlocks", "equalsGreaterParam"],         desc: "{0} >= {1}"};
-  this.widget["coordinateOperationMultiplyDivide"]  = {sprite: "coordinateOperationMultiplyDivide.png"  ,width: 80, height: 64,  name: "Coordinate Operator",          confModules: [], confModulesLeft: ["operator"], confModulesRight: ["variableName"],                            desc: "Setting variable: \"{0}\""};
-  this.widget["coordinateOperationPlusMinus"]       = {sprite: "coordinateOperationPlusMinus.png"       ,width: 80, height: 64,  name: "Coordinate Operator",          confModules: [], confModulesLeft: ["operator"], confModulesRight: ["variableName"],                            desc: "Setting variable: \"{0}\""};
-  this.widget["coordinateOperator"]                 = {sprite: "coordinateOperationPlusMinus.png"       ,width: 80, height: 64,  name: "Coordinate Operator",          confModules: [], confModulesLeft: ["operator"], confModulesRight: ["variableName"],                            desc: "Setting variable: \"{0}\""};
-  this.widget["coordinate"]                         = {sprite: "coordinatePiece.png"                    ,width: 80, height: 44,  name: "Coordinate",                   confModules: [], confModulesLeft: ["constantVariable"], confModulesRight: ["XYZinput", "variableName"],        desc: "{0}"};
-  this.widget["crafting"]                           = {sprite: "craftPiece.png"                         ,width: 80, height: 152, name: "Crafting",                     confModules: [], confModulesLeft: ["useCount"], confModulesRight: [],                                          desc: ""};
-  this.widget["dig"]                                = {sprite: "digPiece.png"                           ,width: 80, height: 108, name: "Dig Area",                     confModules: [], confModulesLeft: ["order", "limitInteractions"], confModulesRight: [],                        desc: "Order: {0}"};
-  this.widget["emitRedstone"]                       = {sprite: "emitRedstonePiece.png"                  ,width: 80, height: 64,  name: "Emit Redstone",                confModules: [], confModulesLeft: ["sides"], confModulesRight: [],                                             desc: "Affecting sides:\n{0}"};
-  this.widget["entityExport"]                       = {sprite: "entityExportPiece.png"                  ,width: 80, height: 108, name: "Export Entity",                confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["entityImport"]                       = {sprite: "entityImportPiece.png"                  ,width: 80, height: 108, name: "Import Entity",                confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["entityRightClick"]                   = {sprite: "entityRightClickPiece.png"              ,width: 80, height: 108, name: "Right Click Entity",           confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["essentiaExport"]                     = {sprite: "essentiaExportPiece.png"                ,width: 80, height: 108, name: "essentiaExport.name",          confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["essentiaFilter"]                     = {sprite: "essentiaFilterPiece.png"                ,width: 80, height: 44,  name: "essentiaFilter.name",          confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["essentiaImport"]                     = {sprite: "essentiaImportPiece.png"                ,width: 80, height: 108, name: "essentiaImport.name",          confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["externalProgram"]                    = {sprite: "externalProgramPiece.png"               ,width: 80, height: 64,  name: "External Program",             confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["goto"]                               = {sprite: "gotoPiece.png"                          ,width: 80, height: 64,  name: "Go to location",               confModules: ["doneWhen"], confModulesLeft: [], confModulesRight: [],                                          desc: "Done when {0}"};
-  this.widget["inventoryExport"]                    = {sprite: "inventoryExportPiece.png"               ,width: 80, height: 108, name: "Export to Inventory",          confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}"};
-  this.widget["inventoryImport"]                    = {sprite: "inventoryImportPiece.png"               ,width: 80, height: 108, name: "Import from Inventory",        confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}"};
-  this.widget["itemAssign"]                         = {sprite: "itemAssignPiece.png"                    ,width: 80, height: 64,  name: "Item Assignment",              confModules: ["variableName"], confModulesLeft: [], confModulesRight: [],                                      desc: "Setting variable: \"{0}\""};
-  this.widget["dropItem"]                           = {sprite: "itemDropPiece.png"                      ,width: 80, height: 108, name: "Drop Items",                   confModules: [], confModulesLeft: ["sides", "dropMethod"], confModulesRight: [],                               desc: ""};
-  this.widget["itemFilter"]                         = {sprite: "itemFilterPiece.png"                    ,width: 80, height: 44,  name: "Item Filter",                  confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "Current filter:\n{0}\n{1} metadata / damage values\n{2} NBT tags"};
-  this.widget["pickupItem"]                         = {sprite: "itemPickPiece.png"                      ,width: 80, height: 108, name: "Pick up Items",                confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["jump"]                               = {sprite: "jumpPiece.png"                          ,width: 80, height: 44,  name: "Jump",                         confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["label"]                              = {sprite: "labelPiece.png"                         ,width: 80, height: 64,  name: "Label",                        confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["liquidExport"]                       = {sprite: "liquidExportPiece.png"                  ,width: 80, height: 108, name: "Export Liquid",                confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}"};
-  this.widget["liquidFilter"]                       = {sprite: "liquidFilterPiece.png"                  ,width: 80, height: 44,  name: "Liquid Filter",                confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "Current filter:\n{0}"};
-  this.widget["liquidImport"]                       = {sprite: "liquidImportPiece.png"                  ,width: 80, height: 108, name: "Import Liquid",                confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}"};
-  this.widget["logistics"]                          = {sprite: "logisticsPiece.png"                     ,width: 80, height: 64,  name: "Logistics",                    confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["place"]                              = {sprite: "placePiece.png"                         ,width: 80, height: 108, name: "Place",                        confModules: [], confModulesLeft: ["order", "direction", "limitInteractions"], confModulesRight: [],           desc: "Order: {0}\nPlacing direction: {1}"};
-  this.widget["rename"]                             = {sprite: "renamePiece.png"                        ,width: 80, height: 64,  name: "Rename Drone",                 confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["rfExport"]                           = {sprite: "RFExportPiece.png"                      ,width: 80, height: 64,  name: "Export RF",                    confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}"};
-  this.widget["rfImport"]                           = {sprite: "RFImportPiece.png"                      ,width: 80, height: 64,  name: "Import RF",                    confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}"};
-  this.widget["standby"]                            = {sprite: "standbyPiece.png"                       ,width: 60, height: 64,  name: "Standby",                      confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["start"]                              = {sprite: "startPiece.png"                         ,width: 60, height: 64,  name: "Start",                        confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["suicide"]                            = {sprite: "suicidePiece.png"                       ,width: 80, height: 44,  name: "Suicide",                      confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
-  this.widget["teleport"]                           = {sprite: "teleportPiece.png"                      ,width: 80, height: 64,  name: "Teleport to location",         confModules: ["doneWhen"], confModulesLeft: [], confModulesRight: [],                                          desc: "Done when {0}"};
-  this.widget["text"]                               = {sprite: "textPiece.png"                          ,width: 80, height: 44,  name: "Text",                         confModules: ["text"], confModulesLeft: [], confModulesRight: [],                                              desc: "Value: {0}"};
-  this.widget["wait"]                               = {sprite: "waitPiece.png"                          ,width: 80, height: 64,  name: "Wait",                         confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: ""};
+  this.widget["area"]                               = {sprite: "areaPiece.png"                          ,width: 80, height: 44,  name: "Area",                         confModules: ["area", "areaType", "extraParameter"], confModulesLeft: [], confModulesRight: [],                desc: "Area type: {0}",                                                   argumentsLeft: ["area"], argumentsRight: ["area"]};
+  this.widget["entityAttack"]                       = {sprite: "attackPiece.png"                        ,width: 80, height: 108, name: "Entity Attack",                confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: ["area", "text"], argumentsRight: ["area", "text"]};
+  this.widget["blockRightClick"]                    = {sprite: "blockRightClickPiece.png"               ,width: 80, height: 108, name: "Right Click Block",            confModules: [], confModulesLeft: ["order", "direction"], confModulesRight: ["sneaking", "limitInteractions"], desc: "Order: {0}\nPlacing direction: {1}",                               argumentsLeft: ["area", "itemFilter"], argumentsRight: ["area", "itemFilter"]};
+  this.widget["comment"]                            = {sprite: "commentPiece.png"                       ,width: 80, height: 64,  name: "Comment",                      confModules: ["text"], confModulesLeft: [], confModulesRight: [],                                              desc: "{0}",                                                              argumentsLeft: [], argumentsRight: []};
+  this.widget["computerCraft"]                      = {sprite: "computerCraftPiece.png"                 ,width: 80, height: 64,  name: "Computer Control",             confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: ["area"], argumentsRight: ["area"]};
+  this.widget["conditionBlock"]                     = {sprite: "conditionBlockPiece.png"                ,width: 80, height: 152, name: "Condition: Block",             confModules: [], confModulesLeft: ["anyAllBlocks"], confModulesRight: [],                                      desc: "{0} >= 1",                                                         argumentsLeft: ["area", "item", "text"], argumentsRight: ["area", "item", "text"]};
+  this.widget["conditionCoordinate"]                = {sprite: "conditionCoordinatePiece.png"           ,width: 80, height: 152, name: "Condition: Coordinate",        confModules: [], confModulesLeft: ["XYZ"], confModulesRight: ["equalsGreater"],                                desc: "Condition: \"{0}\"",                                               argumentsLeft: ["coordinate", "coordinate", "text"], argumentsRight: ["coordinate", "coordinate", "text"]};
+  this.widget["droneConditionEntity"]               = {sprite: "conditionDroneEntityPiece.png"          ,width: 80, height: 108, name: "Drone Condition: Entity",      confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: ["text", "text"], argumentsRight: ["text", "text"]};
+  this.widget["conditionDroneEssentia"]             = {sprite: "conditionDroneEssentiaPiece.png"        ,width: 80, height: 108, name: "Drone Condition: Essentia",    confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: []};
+  this.widget["droneConditionItem"]                 = {sprite: "conditionDroneInventoryPiece.png"       ,width: 80, height: 108, name: "Drone Condition: Items",       confModules: [], confModulesLeft: ["equalsGreaterParam"], confModulesRight: [],                                desc: "",                                                                 argumentsLeft: ["itemFilter", "text"], argumentsRight: ["itemFilter", "text"]};
+  this.widget["droneConditionLiquid"]               = {sprite: "conditionDroneLiquidPiece.png"          ,width: 80, height: 108, name: "Drone Condition: Liquid",      confModules: [], confModulesLeft: ["equalsGreaterParam"], confModulesRight: [],                                desc: "",                                                                 argumentsLeft: ["fluidFilter", "text"], argumentsRight: ["fluidFilter", "text"]};
+  this.widget["droneConditionPressure"]             = {sprite: "conditionDronePressurePiece.png"        ,width: 80, height: 64,  name: "Drone Condition: Pressure",    confModules: [], confModulesLeft: ["equalsGreaterParam"], confModulesRight: [],                                desc: "",                                                                 argumentsLeft: ["text"], argumentsRight: ["text"]};
+  this.widget["droneConditionRF"]                   = {sprite: "conditionDroneRFPiece.png"              ,width: 80, height: 64,  name: "Drone Condition: RF",          confModules: [], confModulesLeft: [], confModulesRight: ["equalsGreaterParam"],                                desc: "",                                                                 argumentsLeft: [], argumentsRight: []};
+  this.widget["conditionEntity"]                    = {sprite: "conditionEntityPiece.png"               ,width: 80, height: 152, name: "Condition: Entity",            confModules: [], confModulesLeft: ["equalsGreaterParam"], confModulesRight: [],                                desc: "{0}",                                                              argumentsLeft: ["area", "text", "text"], argumentsRight: ["area", "text", "text"]};
+  this.widget["conditionEssentia"]                  = {sprite: "conditionEssentiaPiece.png"             ,width: 80, height: 152, name: "Condition: Essentia",          confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: []};
+  this.widget["conditionItem"]                      = {sprite: "conditionItem.png"                      ,width: 80, height: 152, name: "Drone Condition: Item Filter", confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: ["itemFilter", "itemFilter", "text"], argumentsRight: ["itemFilter", "itemFilter", "text"]};
+  this.widget["conditionItemInventory"]             = {sprite: "conditionItemInventoryPiece.png"        ,width: 80, height: 152, name: "Condition: Items",             confModules: [], confModulesLeft: ["sides"], confModulesRight: ["anyAllBlocks", "equalsGreaterParam"],         desc: "Accessing sides:\n{0}\n{1}",                                       argumentsLeft: ["area", "itemFilter", "text"], argumentsRight: ["area", "itemFilter", "text"]};
+  this.widget["conditionLiquidInventory"]           = {sprite: "conditionLiquidInventoryPiece.png"      ,width: 80, height: 152, name: "Condition: Liquid",            confModules: [], confModulesLeft: ["sides"], confModulesRight: ["anyAllBlocks", "equalsGreaterParam"],         desc: "Accessing sides:\n{0}\n{1}",                                       argumentsLeft: ["area", "fluidFilter", "text"], argumentsRight: ["area", "fluidFilter", "text"]};
+  this.widget["conditionPressure"]                  = {sprite: "conditionPressurePiece.png"             ,width: 80, height: 108, name: "Condition: Pressure",          confModules: [], confModulesLeft: ["sides"], confModulesRight: ["anyAllBlocks", "equalsGreaterParam"],         desc: "Accessing sides:\n{0}\n{1}",                                       argumentsLeft: ["area", "text"], argumentsRight: ["area", "text"]};
+  this.widget["conditionRedstone"]                  = {sprite: "conditionRedstonePiece.png"             ,width: 80, height: 108, name: "Condition: Redstone",          confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "Accessing sides:\n{0}\n{1}",                                       argumentsLeft: ["area", "text"], argumentsRight: ["area", "text"]};
+  this.widget["conditionRF"]                        = {sprite: "conditionRFPiece.png"                   ,width: 80, height: 108, name: "Condition: RF",                confModules: [], confModulesLeft: ["sides"], confModulesRight: ["anyAllBlocks", "equalsGreaterParam"],         desc: "{0} >= {1}",                                                       argumentsLeft: [], argumentsRight: []};
+  this.widget["coordinateOperationMultiplyDivide"]  = {sprite: "coordinateOperationMultiplyDivide.png"  ,width: 80, height: 64,  name: "Coordinate Operator",          confModules: [], confModulesLeft: ["operator"], confModulesRight: ["variableName"],                            desc: "Setting variable: \"{0}\"",                                        argumentsLeft: ["coordinate"], argumentsRight: ["coordinate"]};
+  this.widget["coordinateOperationPlusMinus"]       = {sprite: "coordinateOperationPlusMinus.png"       ,width: 80, height: 64,  name: "Coordinate Operator",          confModules: [], confModulesLeft: ["operator"], confModulesRight: ["variableName"],                            desc: "Setting variable: \"{0}\"",                                        argumentsLeft: ["coordinate"], argumentsRight: ["coordinate"]};
+  this.widget["coordinateOperator"]                 = {sprite: "coordinateOperationPlusMinus.png"       ,width: 80, height: 64,  name: "Coordinate Operator",          confModules: [], confModulesLeft: ["operator"], confModulesRight: ["variableName"],                            desc: "Setting variable: \"{0}\"",                                        argumentsLeft: ["coordinate"], argumentsRight: ["coordinate"]};
+  this.widget["coordinate"]                         = {sprite: "coordinatePiece.png"                    ,width: 80, height: 44,  name: "Coordinate",                   confModules: [], confModulesLeft: ["constantVariable"], confModulesRight: ["XYZinput", "variableName"],        desc: "{0}",                                                              argumentsLeft: ["coordinate"], argumentsRight: ["coordinate"]};
+  this.widget["crafting"]                           = {sprite: "craftPiece.png"                         ,width: 80, height: 152, name: "Crafting",                     confModules: [], confModulesLeft: ["useCount"], confModulesRight: [],                                          desc: "",                                                                 argumentsLeft: [], argumentsRight: ["itemFilter", "itemFilter", "itemFilter"]};
+  this.widget["dig"]                                = {sprite: "digPiece.png"                           ,width: 80, height: 108, name: "Dig Area",                     confModules: [], confModulesLeft: ["order", "limitInteractions"], confModulesRight: [],                        desc: "Order: {0}",                                                       argumentsLeft: ["area", "itemFilter"], argumentsRight: ["area", "itemFilter"]};
+  this.widget["emitRedstone"]                       = {sprite: "emitRedstonePiece.png"                  ,width: 80, height: 64,  name: "Emit Redstone",                confModules: [], confModulesLeft: ["sides"], confModulesRight: [],                                             desc: "Affecting sides:\n{0}",                                            argumentsLeft: [], argumentsRight: ["text"]};
+  this.widget["entityExport"]                       = {sprite: "entityExportPiece.png"                  ,width: 80, height: 108, name: "Export Entity",                confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: ["area", "text"], argumentsRight: ["area", "text"]};
+  this.widget["entityImport"]                       = {sprite: "entityImportPiece.png"                  ,width: 80, height: 108, name: "Import Entity",                confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: ["area", "text"], argumentsRight: ["area", "text"]};
+  this.widget["entityRightClick"]                   = {sprite: "entityRightClickPiece.png"              ,width: 80, height: 108, name: "Right Click Entity",           confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: ["area", "text"], argumentsRight: ["area", "text"]};
+  this.widget["essentiaExport"]                     = {sprite: "essentiaExportPiece.png"                ,width: 80, height: 108, name: "essentiaExport.name",          confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: []};
+  this.widget["essentiaFilter"]                     = {sprite: "essentiaFilterPiece.png"                ,width: 80, height: 44,  name: "essentiaFilter.name",          confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: []};
+  this.widget["essentiaImport"]                     = {sprite: "essentiaImportPiece.png"                ,width: 80, height: 108, name: "essentiaImport.name",          confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: []};
+  this.widget["externalProgram"]                    = {sprite: "externalProgramPiece.png"               ,width: 80, height: 64,  name: "External Program",             confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: ["area"], argumentsRight: ["area"]};
+  this.widget["goto"]                               = {sprite: "gotoPiece.png"                          ,width: 80, height: 64,  name: "Go to location",               confModules: ["doneWhen"], confModulesLeft: [], confModulesRight: [],                                          desc: "Done when {0}",                                                    argumentsLeft: ["area"], argumentsRight: ["area"]};
+  this.widget["inventoryExport"]                    = {sprite: "inventoryExportPiece.png"               ,width: 80, height: 108, name: "Export to Inventory",          confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}",                                            argumentsLeft: ["area", "itemFilter"], argumentsRight: ["area", "itemFilter"]};
+  this.widget["inventoryImport"]                    = {sprite: "inventoryImportPiece.png"               ,width: 80, height: 108, name: "Import from Inventory",        confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}",                                            argumentsLeft: ["area", "itemFilter"], argumentsRight: ["area", "itemFilter"]};
+  this.widget["itemAssign"]                         = {sprite: "itemAssignPiece.png"                    ,width: 80, height: 64,  name: "Item Assignment",              confModules: ["variableName"], confModulesLeft: [], confModulesRight: [],                                      desc: "Setting variable: \"{0}\"",                                        argumentsLeft: [], argumentsRight: ["itemFilter"]};
+  this.widget["dropItem"]                           = {sprite: "itemDropPiece.png"                      ,width: 80, height: 108, name: "Drop Items",                   confModules: [], confModulesLeft: ["sides", "dropMethod"], confModulesRight: [],                               desc: "",                                                                 argumentsLeft: ["area", "itemFilter"], argumentsRight: ["area", "itemFilter"]};
+  this.widget["itemFilter"]                         = {sprite: "itemFilterPiece.png"                    ,width: 80, height: 44,  name: "Item Filter",                  confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "Current filter:\n{0}\n{1} metadata / damage values\n{2} NBT tags", argumentsLeft: ["itemFilter"], argumentsRight: ["itemFilter"]};
+  this.widget["pickupItem"]                         = {sprite: "itemPickPiece.png"                      ,width: 80, height: 108, name: "Pick up Items",                confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: ["area", "itemFilter"], argumentsRight: ["area", "itemFilter"]};
+  this.widget["jump"]                               = {sprite: "jumpPiece.png"                          ,width: 80, height: 44,  name: "Jump",                         confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: ["text"]};
+  this.widget["label"]                              = {sprite: "labelPiece.png"                         ,width: 80, height: 64,  name: "Label",                        confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: ["text"]};
+  this.widget["liquidExport"]                       = {sprite: "liquidExportPiece.png"                  ,width: 80, height: 108, name: "Export Liquid",                confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}",                                            argumentsLeft: ["area", "fluidFilter"], argumentsRight: ["area", "fluidFilter"]};
+  this.widget["liquidImport"]                       = {sprite: "liquidImportPiece.png"                  ,width: 80, height: 108, name: "Import Liquid",                confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}",                                            argumentsLeft: ["area", "fluidFilter"], argumentsRight: ["area", "fluidFilter"]};
+  this.widget["liquidFilter"]                       = {sprite: "liquidFilterPiece.png"                  ,width: 80, height: 44,  name: "Liquid Filter",                confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "Current filter:\n{0}",                                             argumentsLeft: ["fluidFilter"], argumentsRight: ["fluidFilter"]};
+  this.widget["logistics"]                          = {sprite: "logisticsPiece.png"                     ,width: 80, height: 64,  name: "Logistics",                    confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: ["area"], argumentsRight: ["area"]};
+  this.widget["place"]                              = {sprite: "placePiece.png"                         ,width: 80, height: 108, name: "Place",                        confModules: [], confModulesLeft: ["order", "direction", "limitInteractions"], confModulesRight: [],           desc: "Order: {0}\nPlacing direction: {1}",                               argumentsLeft: ["area", "itemFilter"], argumentsRight: ["area", "itemFilter"]};
+  this.widget["rename"]                             = {sprite: "renamePiece.png"                        ,width: 80, height: 64,  name: "Rename Drone",                 confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: ["text"]};
+  this.widget["rfExport"]                           = {sprite: "RFExportPiece.png"                      ,width: 80, height: 64,  name: "Export RF",                    confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}",                                            argumentsLeft: ["area"], argumentsRight: ["area"]};
+  this.widget["rfImport"]                           = {sprite: "RFImportPiece.png"                      ,width: 80, height: 64,  name: "Import RF",                    confModules: [], confModulesLeft: ["sides", "useCount"], confModulesRight: [],                                 desc: "Accessing sides:\n{0}",                                            argumentsLeft: ["area"], argumentsRight: ["area"]};
+  this.widget["standby"]                            = {sprite: "standbyPiece.png"                       ,width: 60, height: 64,  name: "Standby",                      confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: ["text"]};
+  this.widget["start"]                              = {sprite: "startPiece.png"                         ,width: 60, height: 64,  name: "Start",                        confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: []};
+  this.widget["suicide"]                            = {sprite: "suicidePiece.png"                       ,width: 80, height: 44,  name: "Suicide",                      confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: []};
+  this.widget["teleport"]                           = {sprite: "teleportPiece.png"                      ,width: 80, height: 64,  name: "Teleport to location",         confModules: ["doneWhen"], confModulesLeft: [], confModulesRight: [],                                          desc: "Done when {0}",                                                    argumentsLeft: ["area"], argumentsRight: ["area"]};
+  this.widget["text"]                               = {sprite: "textPiece.png"                          ,width: 80, height: 44,  name: "Text",                         confModules: ["text"], confModulesLeft: [], confModulesRight: [],                                              desc: "Value: {0}",                                                       argumentsLeft: ["text"], argumentsRight: ["text"]};
+  this.widget["wait"]                               = {sprite: "waitPiece.png"                          ,width: 80, height: 64,  name: "Wait",                         confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: ["text"]};
+
+  this.argumentOffsetX = 15;
+  this.argumentOffsetY = 44;
 }
 
 Widgets.prototype.getSprite = function(name, altTexture)
@@ -93,7 +96,7 @@ Widgets.prototype.getName = function(name)
   if (this.widget[name])
     return this.widget[name].name;
   else
-    return "???";
+    return false;
 };
 
 /**
@@ -238,4 +241,102 @@ Widgets.prototype.getOrder = function(order)
     case 1: return "Low to High";
     case 2: return "High to Low";
   }
+};
+
+Widgets.prototype.getArgumentsForSide2 = function(argumentCount, widgetId, side)
+{
+  var originX = Program.widgets.value[widgetId].x.value;
+  var originY = Program.widgets.value[widgetId].y.value;
+
+  return this.getArgumentsForSide(argumentCount, originX, originY, side);
+};
+
+/**
+ * @param argumentNumber {Number}
+ * @param originX {Number}
+ * @param originY {Number}
+ * @param side {"left"|"right"}
+ * @return {Object}
+ */
+Widgets.prototype.getArgumentsForSide = function(argumentNumber, originX, originY, side)
+{
+  if (typeof originX == "undefined" || typeof originY == "undefined" || typeof side == "undefined")
+    throw new TypeError("Not enough arguments");
+
+  var argumentX;
+  if (side == "left")
+  {
+    console.log("Left: argumentX = "+originX+" - "+"(("+argumentNumber+" + 1) * "+this.argumentOffsetX+");");
+    argumentX = originX - ((argumentNumber + 1) * this.argumentOffsetX);
+  }
+  else if (side == "right")
+  {
+    console.log("Right: argumentX = "+originX+" + "+"(("+argumentNumber+" + 1) * "+this.argumentOffsetX+");");
+    argumentX = originX + ((argumentNumber + 1) * this.argumentOffsetX);
+  }
+
+  return {x: argumentX, y: originY};
+};
+
+Widgets.prototype.getArguments = function(parentWidgetId)
+{
+  var argumentsLeft = [];
+  var argumentsRight = [];
+
+  var widgetArray = Program.widgets.value;
+  var thisWidget = widgetArray[parentWidgetId];
+  var thisWidgetName = thisWidget.name.value;
+  var thisWidgetArgumentsLeft = this.widget[thisWidgetName].argumentsLeft;
+  var thisWidgetArgumentsRight = this.widget[thisWidgetName].argumentsRight;
+  var thisWidgetX = thisWidget.x.value;
+  var thisWidgetY = thisWidget.y.value;
+
+  if (thisWidgetArgumentsLeft.length == 0 && thisWidgetArgumentsRight.length == 0)
+    return false;
+
+  var argumentYPosition;
+  var argumentXPosition = 0;
+  var argumentYOffset;
+  var outOfArguments;
+  var argumentPos;
+
+  console.log("Iterating through " + thisWidgetArgumentsLeft.length + " left arguments");
+  for (argumentYPosition = 0; argumentYPosition < thisWidgetArgumentsLeft.length; argumentYPosition++)
+  {
+    argumentYOffset = (argumentYPosition + 1) * this.argumentOffsetY;
+    outOfArguments = false;
+    while (!outOfArguments)
+    {
+      argumentPos = this.getArgumentsForSide2(argumentXPosition, parentWidgetId, "left");
+
+      if (typeof widgetPositionList != "undefined" &&  typeof widgetPositionList[argumentPos.y] != "undefined" && typeof widgetPositionList[argumentPos.y][argumentPos.x] != "undefined")
+        argumentsLeft.push(widgetPositionList[argumentPos.y][argumentPos.x]);
+      else
+        outOfArguments = true;
+      console.log("Testing position y" + argumentPos.y + " x" + argumentPos.x + " Result: " + outOfArguments);
+      argumentXPosition++;
+    }
+  }
+
+  argumentXPosition = 0;
+
+  console.log("Iterating through " + thisWidgetArgumentsRight.length + " right arguments");
+  for (argumentYPosition = 0; argumentYPosition < thisWidgetArgumentsRight.length; argumentYPosition++)
+  {
+    argumentYOffset = (argumentYPosition + 1) * this.argumentOffsetY;
+    outOfArguments = false;
+    while (!outOfArguments)
+    {
+      argumentPos = this.getArgumentsForSide2(argumentXPosition, parentWidgetId, "right");
+
+      if (typeof widgetPositionList != "undefined" &&  typeof widgetPositionList[argumentPos.y] != "undefined" && typeof widgetPositionList[argumentPos.y][argumentPos.x] != "undefined")
+        argumentsRight.push(widgetPositionList[argumentPos.y][argumentPos.x]);
+      else
+        outOfArguments = true;
+      console.log("Testing position y" + argumentPos.y + " x" + argumentPos.x + " Result: " + outOfArguments);
+      argumentXPosition++;
+    }
+  }
+
+  return [argumentsLeft, argumentsRight];
 };
