@@ -219,49 +219,10 @@ function loadProgram(url)
         payload = payload.split(";");
         var test = payload[0];
         var content = payload[1];
-        var successes = 0;
-        var failures = 0;
 
         if (test == "true")
         {
-          widgetContainer.innerHTML = "<svg id=\"lineContainer\"></svg>";
-          Program.json = content;
-
-          Program.widgets = JSON.parse(Program.json).widgets;
-
-          var widgets = Program.widgets.value;
-
-          for (var i = 0; i < widgets.length; i++)
-          {
-            var object = widgets[i];
-
-            var altTexture = false;
-            if (object["multiplyDivide"])
-              altTexture = object["multiplyDivide"].value;
-
-            var result = createWidget(object.name.value, i, altTexture, object.x.value, object.y.value, defaultSpriteScale);
-
-            if (result)
-              successes++;
-            else
-            {
-              failures++;
-              console.warn("Failed to create piece \"" + object.name.value + "\"");
-            }
-          }
-          if (failures > 0)
-          {
-            addMessage("The program was loaded! Failed to load " + failures + " pieces!");
-          }
-          else
-          {
-            addMessage("The program was loaded!");
-            applicationReset();
-          }
-
-          console.log("Program.widgets.value:");
-          console.log(Program.widgets.value);
-          updateWidgetPositionList();
+          parseProgramFromJson(content);
         }
         else
         {
@@ -275,6 +236,54 @@ function loadProgram(url)
         console.warn("An error prevented the request from being sent (" + payload.status + ")");
         addMessage("An error prevented the request from being sent (" + payload.status + ")");
       });
+}
+
+/**
+ * Attempts to parse a json string into a program object
+ * @param program {String}
+ */
+function parseProgramFromJson(program)
+{
+  var successes = 0;
+  var failures = 0;
+  widgetContainer.innerHTML = "<svg id=\"lineContainer\"></svg>";
+  Program.json = program;
+
+  Program.widgets = JSON.parse(Program.json).widgets;
+
+  var widgets = Program.widgets.value;
+
+  for (var i = 0; i < widgets.length; i++)
+  {
+    var object = widgets[i];
+
+    var altTexture = false;
+    if (object["multiplyDivide"])
+      altTexture = object["multiplyDivide"].value;
+
+    var result = createWidget(object.name.value, i, altTexture, object.x.value, object.y.value, defaultSpriteScale);
+
+    if (result)
+      successes++;
+    else
+    {
+      failures++;
+      console.warn("Failed to create piece \"" + object.name.value + "\"");
+    }
+  }
+  if (failures > 0)
+  {
+    addMessage("The program was loaded! Failed to load " + failures + " pieces!");
+  }
+  else
+  {
+    addMessage("The program was loaded!");
+    applicationReset();
+  }
+
+  console.log("Program.widgets.value:");
+  console.log(Program.widgets.value);
+  updateWidgetPositionList();
 }
 
 /**

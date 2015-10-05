@@ -39,12 +39,15 @@ if ($_GET['load'])
 
   </div>
 </div>
-<div id="menuLoadProgram" class="menu" style="margin-top: -60px; margin-left: -205px; height: 120px; width: 400px;">
+<div id="menuLoadProgram" class="menu" style="margin-top: -100px; margin-left: -205px; height: 200px; width: 400px;">
   <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
   <div class="buttonClose" onclick="menuExit()"></div>
   <div class="menuTitle">Load Program</div>
   <div>
-    <input type="text" name="programUrl" id="programUrl" placeholder="Enter url to pastebin here" style="width: 100%; margin-bottom: 10px;"/>
+    <input type="text" name="programUrl" id="programUrl" placeholder="Enter url to Pastebin here" style="width: 100%; margin-bottom: 10px;"/>
+  </div>
+  <div>
+    <textarea name="programJson" id="programJson" placeholder="or paste program here from clipboard! If url box is not empty this will be ignored!" style="resize: none; width: 100%; height: 85px;"></textarea>
   </div>
   <div class="menuButton" style="margin-left: 36%;" onclick="loadUrl();">Load</div>
   <div class="menuButton" onclick="menuExit()">Cancel</div>
@@ -110,7 +113,7 @@ if ($_GET['load'])
 
   var widgets = new Widgets();
   var modules = new ConfigModules();
-  var elements = [document.getElementById("programUrl"), document.getElementById("widgetTooltip")];
+  var elements = [document.getElementById("programUrl"), document.getElementById("widgetTooltip"), document.getElementById("programJson")];
   var widgetContainer = document.getElementById("widgetContainer");
   var widgetConfigModuleContainer = {main: document.getElementById("menuWidgetConfigModuleContainer"), center: document.getElementById("menuWidgetConfigModules"), left: document.getElementById("menuWidgetConfigModulesLeft"), right: document.getElementById("menuWidgetConfigModulesRight")};
 
