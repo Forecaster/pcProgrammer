@@ -111,7 +111,7 @@ function enableWidgetConfigModules(widgetId, center, left, right)
 
   if (typeof center != "undefined" && center.length > 0)
   {
-    console.log(center);
+    //console.log(center);
     for (i = 0; i < center.length; i++)
     {
       widgetConfigModuleContainer.center.appendChild(modules.getModule(center[i]));
@@ -122,7 +122,7 @@ function enableWidgetConfigModules(widgetId, center, left, right)
 
   if (typeof left != "undefined" && left.length > 0)
   {
-    console.log(left);
+    //console.log(left);
     for (i = 0; i < left.length; i++)
     {
       widgetConfigModuleContainer.left.appendChild(modules.getModule(left[i]));
@@ -133,7 +133,7 @@ function enableWidgetConfigModules(widgetId, center, left, right)
 
   if (typeof right != "undefined" && right.length > 0)
   {
-    console.log(right);
+    //console.log(right);
     for (i = 0; i < right.length; i++)
     {
       widgetConfigModuleContainer.right.appendChild(modules.getModule(right[i]));
@@ -606,7 +606,7 @@ function getWidgetPos(widgetId)
   var widgetArray = Program.widgets.value;
   var thisWidget = widgetArray[widgetId];
 
-  return {x: thisWidget.x.value, y: thisWidget.y.value};
+  return {x: thisWidget.x.value * currentScale, y: thisWidget.y.value * currentScale};
 }
 
 /**
@@ -678,7 +678,7 @@ function addLinesToWidget(originWidgetId, targetWidgetIds, replace)
     var targetWidgetId = targetWidgetIds[i];
     var lineEnd = getWidgetCenterPos(targetWidgetId);
 
-    console.log("LineStart: x:" + lineStart.x + " y:" + lineStart.y + ", LineEnd: x:" + lineEnd.x + " y:" + lineEnd.y);
+    //console.log("LineStart: x:" + lineStart.x + " y:" + lineStart.y + ", LineEnd: x:" + lineEnd.x + " y:" + lineEnd.y);
 
     drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y, container);
   }
@@ -701,4 +701,20 @@ function updateWidgetPositionList()
 
     widgetPositionList[y][x] = id;
   }
+}
+
+function redrawWidgetConnections()
+{
+  var widgetArray = Program.widgets.value;
+  var parents = [];
+
+  for (var i = 0; i < widgetArray.length; i++)
+  {
+    var widget = widgetArray[i];
+    if (widgets.widgetIsValidLineRoot(i))
+    {
+      parents.push(widgets.getArguments(i));
+    }
+  }
+  return parents;
 }

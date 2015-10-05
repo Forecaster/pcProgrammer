@@ -4,6 +4,9 @@ function Widgets(baseDir)
     this.baseDir = baseDir;
   else
     this.baseDir = "progwidgets/";
+
+  this.widgetArgumentOffsetX = 15; //The width of widgets that take arguments minus the overlap
+  this.widgetArgumentOffsetY = 11; //The height of argument widgets
   
   this.widget = {};
   this.widget["area"]                               = {sprite: "areaPiece.png"                          ,width: 80, height: 44,  name: "Area",                         confModules: ["area", "areaType", "extraParameter"], confModulesLeft: [], confModulesRight: [],                desc: "Area type: {0}",                                                   argumentsLeft: ["area"], argumentsRight: ["area"]};
@@ -266,18 +269,23 @@ Widgets.prototype.getArgumentsForSide = function(argumentNumber, originX, origin
   var argumentX;
   if (side == "left")
   {
-    console.log("Left: argumentX = "+originX+" - "+"(("+argumentNumber+" + 1) * "+this.argumentOffsetX+");");
+    //console.log("Left: argumentX = "+originX+" - "+"(("+argumentNumber+" + 1) * "+this.argumentOffsetX+");");
     argumentX = originX - ((argumentNumber + 1) * this.argumentOffsetX);
   }
   else if (side == "right")
   {
-    console.log("Right: argumentX = "+originX+" + "+"(("+argumentNumber+" + 1) * "+this.argumentOffsetX+");");
+    //console.log("Right: argumentX = "+originX+" + "+"(("+argumentNumber+" + 1) * "+this.argumentOffsetX+");");
     argumentX = originX + ((argumentNumber + 1) * this.argumentOffsetX);
   }
 
   return {x: argumentX, y: originY};
 };
 
+/**
+ *
+ * @param parentWidgetId {Number}
+ * @returns {Array}
+ */
 Widgets.prototype.getArguments = function(parentWidgetId)
 {
   var argumentsLeft = [];
@@ -300,7 +308,7 @@ Widgets.prototype.getArguments = function(parentWidgetId)
   var outOfArguments;
   var argumentPos;
 
-  console.log("Iterating through " + thisWidgetArgumentsLeft.length + " left arguments");
+  //console.log("Iterating through " + thisWidgetArgumentsLeft.length + " left arguments");
   for (argumentYPosition = 0; argumentYPosition < thisWidgetArgumentsLeft.length; argumentYPosition++)
   {
     argumentYOffset = (argumentYPosition + 1) * this.argumentOffsetY;
@@ -313,14 +321,14 @@ Widgets.prototype.getArguments = function(parentWidgetId)
         argumentsLeft.push(widgetPositionList[argumentPos.y][argumentPos.x]);
       else
         outOfArguments = true;
-      console.log("Testing position y" + argumentPos.y + " x" + argumentPos.x + " Result: " + outOfArguments);
+      //console.log("Testing position y" + argumentPos.y + " x" + argumentPos.x + " Result: " + outOfArguments);
       argumentXPosition++;
     }
   }
 
   argumentXPosition = 0;
 
-  console.log("Iterating through " + thisWidgetArgumentsRight.length + " right arguments");
+  //console.log("Iterating through " + thisWidgetArgumentsRight.length + " right arguments");
   for (argumentYPosition = 0; argumentYPosition < thisWidgetArgumentsRight.length; argumentYPosition++)
   {
     argumentYOffset = (argumentYPosition + 1) * this.argumentOffsetY;
@@ -333,10 +341,88 @@ Widgets.prototype.getArguments = function(parentWidgetId)
         argumentsRight.push(widgetPositionList[argumentPos.y][argumentPos.x]);
       else
         outOfArguments = true;
-      console.log("Testing position y" + argumentPos.y + " x" + argumentPos.x + " Result: " + outOfArguments);
+      //console.log("Testing position y" + argumentPos.y + " x" + argumentPos.x + " Result: " + outOfArguments);
       argumentXPosition++;
     }
   }
 
   return [argumentsLeft, argumentsRight];
+};
+
+/**
+ * Looks for a possible parent widget for the given widget
+ * @param widgetId {Number}
+ * @return {Number|boolean}
+ */
+Widgets.prototype.getParentOfArgument = function(widgetId)
+{
+  var possibleParentPositions = [];
+  var thisWidget = Program.widgets.value[widgetId];
+
+  console.log("Widget " + widgetId + " at x" + thisWidget.x.value + " y" + thisWidget.y.value);
+
+  possibleParentPositions.push({x: (thisWidget.x.value - widgets.widgetArgumentOffsetX), y: (thisWidget.y.value)});
+  possibleParentPositions.push({x: (thisWidget.x.value - widgets.widgetArgumentOffsetX), y: (thisWidget.y.value - widgets.widgetArgumentOffsetY)});
+  possibleParentPositions.push({x: (thisWidget.x.value - widgets.widgetArgumentOffsetX), y: (thisWidget.y.value - (widgets.widgetArgumentOffsetY * 2))});
+  possibleParentPositions.push({x: (thisWidget.x.value + widgets.widgetArgumentOffsetX), y: (thisWidget.y.value)});
+  possibleParentPositions.push({x: (thisWidget.x.value + widgets.widgetArgumentOffsetX), y: (thisWidget.y.value - widgets.widgetArgumentOffsetY)});
+  possibleParentPositions.push({x: (thisWidget.x.value + widgets.widgetArgumentOffsetX), y: (thisWidget.y.value - (widgets.widgetArgumentOffsetY * 2))});
+
+  console.log(possibleParentPositions);
+
+  for (var i = 0; i < possibleParentPositions.length; i++)
+  {
+    var x = possibleParentPositions[i].x;
+    var y = possibleParentPositions[i].y;
+    console.log("Scan for widget at x" + x + " y" + y);
+    if (widgetPositionList[y] != undefined && widgetPositionList[y] != null)
+      if (widgetPositionList[y][x] != undefined && widgetPositionList[y][x] != null)
+        return widgetPositionList[y][x];
+  }
+  return false;
+};
+
+Widgets.prototype.widgetIsValidLineRoot = function(widgetId)
+{
+  var thisWidget = Program.widgets.value[widgetId];
+
+  switch (thisWidget.name.value)
+  {
+    case "label":
+      return true;
+    case "conditionBlock":
+      return true;
+    case "conditionCoordinate":
+      return true;
+    case "droneConditionEntity":
+      return true;
+    case "conditionDroneEssentia":
+      return true;
+    case "droneConditionItem":
+      return true;
+    case "droneConditionLiquid":
+      return true;
+    case "droneConditionPressure":
+      return true;
+    case "droneConditionRF":
+      return true;
+    case "conditionEntity":
+      return true;
+    case "conditionEssentia":
+      return true;
+    case "conditionItem":
+      return true;
+    case "conditionItemInventory":
+      return true;
+    case "conditionLiquidInventory":
+      return true;
+    case "conditionPressure":
+      return true;
+    case "conditionRedstone":
+      return true;
+    case "conditionRF":
+      return true;
+    default:
+      return false;
+  }
 };

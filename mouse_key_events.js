@@ -156,7 +156,7 @@ function onMouseMove(e)
   if (e == null)
     e = window.event;
 
-  updateDebugInfo("x: " + ((parseInt(document.getElementById("widgetContainer").style.left) - e.clientX) * -1) + ", y: " + ((parseInt(document.getElementById("widgetContainer").style.top) - e.clientY) * -1));
+  updateDebugInfo("x: " + Math.floor(((parseInt(document.getElementById("widgetContainer").style.left) - e.clientX) / currentScale) * -1) + ", y: " + Math.floor(((parseInt(document.getElementById("widgetContainer").style.top) - e.clientY) / currentScale) * -1));
 
   if (pan)
   {

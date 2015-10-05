@@ -284,8 +284,8 @@ svg
 
 .lineConnection
 {
-  z-index      : 30000;
-  position     : relative;
-  stroke       : black;
-  stroke-width : 2px;
+  z-index             : 30000;
+  position            : relative;
+  stroke              : black;
+  stroke-width        : 2px;
 }
