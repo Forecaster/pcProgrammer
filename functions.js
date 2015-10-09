@@ -719,8 +719,14 @@ function redrawWidgetConnections()
 
   for (var c = 0; c < parents.length; c++)
   {
-    var thisArguments = widgets.getArguments(c);
-    console.log(thisArguments);
+    var thisArguments = parents[c];
+
+    var textArgumentLevel = widgets.widgetIsValidLineRoot(c);
+    if (textArgumentLevel != false)
+    {
+      if (textArgumentLevel == 1)
+        
+    }
   }
 }
 
