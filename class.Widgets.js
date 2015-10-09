@@ -275,7 +275,6 @@ Widgets.prototype.getArguments = function(parentWidgetId)
   //This will be doing the left side, so x will be lower than the parent
   for (currentYLevel = 0; currentYLevel < this.maxArgumentLevel; currentYLevel++)
   {
-    console.log("Current Y: " + currentYLevel);
     currentYPosition = parentWidget.y.value + (this.widgetArgumentOffsetY * currentYLevel);
 
     foundArgument = true;
@@ -287,7 +286,6 @@ Widgets.prototype.getArguments = function(parentWidgetId)
       {
         argumentsFound++;
         currentXLevel++;
-        console.log("[Left]Found argument " + widgetPositionList[currentYPosition][currentXPosition] + " at y" + currentYPosition + " x" + currentXPosition + " at Y level " + (currentYLevel + 1) + " and X level " + currentXLevel);
         if (currentYLevel == 0)
           argumentsLeftLevel1.push(widgetPositionList[currentYPosition][currentXPosition]);
         else if (currentYLevel == 1)
@@ -303,7 +301,6 @@ Widgets.prototype.getArguments = function(parentWidgetId)
   //This will be doing the right side, so x will be lower than the parent
   for (currentYLevel = 0; currentYLevel < this.maxArgumentLevel; currentYLevel++)
   {
-    console.log("Current Y: " + currentYLevel);
     currentYPosition = parentWidget.y.value + (this.widgetArgumentOffsetY * currentYLevel);
 
     foundArgument = true;
@@ -315,7 +312,6 @@ Widgets.prototype.getArguments = function(parentWidgetId)
       {
         argumentsFound++;
         currentXLevel++;
-        console.log("[Right]Found argument " + widgetPositionList[currentYPosition][currentXPosition] + " at y" + currentYPosition + " x" + currentXPosition + " at Y level " + (currentYLevel + 1) + " and X level " + currentXLevel);
         if (currentYLevel == 0)
           argumentsRightLevel1.push(widgetPositionList[currentYPosition][currentXPosition]);
         else if (currentYLevel == 1)
