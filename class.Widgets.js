@@ -7,6 +7,7 @@ function Widgets(baseDir)
 
   this.widgetArgumentOffsetX = 15; //The width of widgets that take arguments minus the overlap
   this.widgetArgumentOffsetY = 11; //The height of argument widgets
+  this.maxArgumentLevel = 3;
   
   this.widget = {};
   this.widget["area"]                               = {sprite: "areaPiece.png"                          ,width: 80, height: 44,  name: "Area",                         confModules: ["area", "areaType", "extraParameter"], confModulesLeft: [], confModulesRight: [],                desc: "Area type: {0}",                                                   argumentsLeft: ["area"], argumentsRight: ["area"]};
@@ -246,107 +247,88 @@ Widgets.prototype.getOrder = function(order)
   }
 };
 
-Widgets.prototype.getArgumentsForSide2 = function(argumentCount, widgetId, side)
-{
-  var originX = Program.widgets.value[widgetId].x.value;
-  var originY = Program.widgets.value[widgetId].y.value;
-
-  return this.getArgumentsForSide(argumentCount, originX, originY, side);
-};
-
-/**
- * @param argumentNumber {Number}
- * @param originX {Number}
- * @param originY {Number}
- * @param side {"left"|"right"}
- * @return {Object}
- */
-Widgets.prototype.getArgumentsForSide = function(argumentNumber, originX, originY, side)
-{
-  if (typeof originX == "undefined" || typeof originY == "undefined" || typeof side == "undefined")
-    throw new TypeError("Not enough arguments");
-
-  var argumentX;
-  if (side == "left")
-  {
-    //console.log("Left: argumentX = "+originX+" - "+"(("+argumentNumber+" + 1) * "+this.argumentOffsetX+");");
-    argumentX = originX - ((argumentNumber + 1) * this.argumentOffsetX);
-  }
-  else if (side == "right")
-  {
-    //console.log("Right: argumentX = "+originX+" + "+"(("+argumentNumber+" + 1) * "+this.argumentOffsetX+");");
-    argumentX = originX + ((argumentNumber + 1) * this.argumentOffsetX);
-  }
-
-  return {x: argumentX, y: originY};
-};
-
 /**
  *
  * @param parentWidgetId {Number}
- * @returns {Array}
+ * @returns {Object}
  */
 Widgets.prototype.getArguments = function(parentWidgetId)
 {
-  var argumentsLeft = [];
-  var argumentsRight = [];
+  var argumentsFound = 0;
+
+  var argumentsLeftLevel1 = [];
+  var argumentsLeftLevel2 = [];
+  var argumentsLeftLevel3 = [];
+  var argumentsRightLevel1 = [];
+  var argumentsRightLevel2 = [];
+  var argumentsRightLevel3 = [];
 
   var widgetArray = Program.widgets.value;
-  var thisWidget = widgetArray[parentWidgetId];
-  var thisWidgetName = thisWidget.name.value;
-  var thisWidgetArgumentsLeft = this.widget[thisWidgetName].argumentsLeft;
-  var thisWidgetArgumentsRight = this.widget[thisWidgetName].argumentsRight;
-  var thisWidgetX = thisWidget.x.value;
-  var thisWidgetY = thisWidget.y.value;
+  var parentWidget = widgetArray[parentWidgetId];
 
-  if (thisWidgetArgumentsLeft.length == 0 && thisWidgetArgumentsRight.length == 0)
-    return false;
+  var currentYLevel;
+  var currentXLevel;
+  var currentYPosition;
+  var currentXPosition;
+  var foundArgument = true;
 
-  var argumentYPosition;
-  var argumentXPosition = 0;
-  var argumentYOffset;
-  var outOfArguments;
-  var argumentPos;
-
-  //console.log("Iterating through " + thisWidgetArgumentsLeft.length + " left arguments");
-  for (argumentYPosition = 0; argumentYPosition < thisWidgetArgumentsLeft.length; argumentYPosition++)
+  //This will be doing the left side, so x will be lower than the parent
+  for (currentYLevel = 0; currentYLevel < this.maxArgumentLevel; currentYLevel++)
   {
-    argumentYOffset = (argumentYPosition + 1) * this.argumentOffsetY;
-    outOfArguments = false;
-    while (!outOfArguments)
-    {
-      argumentPos = this.getArgumentsForSide2(argumentXPosition, parentWidgetId, "left");
+    console.log("Current Y: " + currentYLevel);
+    currentYPosition = parentWidget.y.value + (this.widgetArgumentOffsetY * currentYLevel);
 
-      if (typeof widgetPositionList != "undefined" &&  typeof widgetPositionList[argumentPos.y] != "undefined" && typeof widgetPositionList[argumentPos.y][argumentPos.x] != "undefined")
-        argumentsLeft.push(widgetPositionList[argumentPos.y][argumentPos.x]);
+    foundArgument = true;
+    currentXLevel = 1;
+    while (foundArgument)
+    {
+      currentXPosition = parentWidget.x.value - (this.widgetArgumentOffsetX * currentXLevel);
+      if (typeof widgetPositionList[currentYPosition] != "undefined" && typeof widgetPositionList[currentYPosition][currentXPosition] != "undefined")
+      {
+        argumentsFound++;
+        currentXLevel++;
+        console.log("[Left]Found argument " + widgetPositionList[currentYPosition][currentXPosition] + " at y" + currentYPosition + " x" + currentXPosition + " at Y level " + (currentYLevel + 1) + " and X level " + currentXLevel);
+        if (currentYLevel == 0)
+          argumentsLeftLevel1.push(widgetPositionList[currentYPosition][currentXPosition]);
+        else if (currentYLevel == 1)
+          argumentsLeftLevel2.push(widgetPositionList[currentYPosition][currentXPosition]);
+        else if (currentYLevel == 2)
+          argumentsLeftLevel3.push(widgetPositionList[currentYPosition][currentXPosition]);
+      }
       else
-        outOfArguments = true;
-      //console.log("Testing position y" + argumentPos.y + " x" + argumentPos.x + " Result: " + outOfArguments);
-      argumentXPosition++;
+        foundArgument = false;
     }
   }
 
-  argumentXPosition = 0;
-
-  //console.log("Iterating through " + thisWidgetArgumentsRight.length + " right arguments");
-  for (argumentYPosition = 0; argumentYPosition < thisWidgetArgumentsRight.length; argumentYPosition++)
+  //This will be doing the right side, so x will be lower than the parent
+  for (currentYLevel = 0; currentYLevel < this.maxArgumentLevel; currentYLevel++)
   {
-    argumentYOffset = (argumentYPosition + 1) * this.argumentOffsetY;
-    outOfArguments = false;
-    while (!outOfArguments)
-    {
-      argumentPos = this.getArgumentsForSide2(argumentXPosition, parentWidgetId, "right");
+    console.log("Current Y: " + currentYLevel);
+    currentYPosition = parentWidget.y.value + (this.widgetArgumentOffsetY * currentYLevel);
 
-      if (typeof widgetPositionList != "undefined" &&  typeof widgetPositionList[argumentPos.y] != "undefined" && typeof widgetPositionList[argumentPos.y][argumentPos.x] != "undefined")
-        argumentsRight.push(widgetPositionList[argumentPos.y][argumentPos.x]);
+    foundArgument = true;
+    currentXLevel = 1;
+    while (foundArgument)
+    {
+      currentXPosition = parentWidget.x.value + (this.widgetArgumentOffsetX * currentXLevel);
+      if (typeof widgetPositionList[currentYPosition] != "undefined" && typeof widgetPositionList[currentYPosition][currentXPosition] != "undefined")
+      {
+        argumentsFound++;
+        currentXLevel++;
+        console.log("[Right]Found argument " + widgetPositionList[currentYPosition][currentXPosition] + " at y" + currentYPosition + " x" + currentXPosition + " at Y level " + (currentYLevel + 1) + " and X level " + currentXLevel);
+        if (currentYLevel == 0)
+          argumentsRightLevel1.push(widgetPositionList[currentYPosition][currentXPosition]);
+        else if (currentYLevel == 1)
+          argumentsRightLevel2.push(widgetPositionList[currentYPosition][currentXPosition]);
+        else if (currentYLevel == 2)
+          argumentsRightLevel3.push(widgetPositionList[currentYPosition][currentXPosition]);
+      }
       else
-        outOfArguments = true;
-      //console.log("Testing position y" + argumentPos.y + " x" + argumentPos.x + " Result: " + outOfArguments);
-      argumentXPosition++;
+        foundArgument = false;
     }
   }
 
-  return [argumentsLeft, argumentsRight];
+  return {argumentsFound: argumentsFound, left: {level1: argumentsLeftLevel1, level2: argumentsLeftLevel2, level3: argumentsLeftLevel3}, right: {level1: argumentsRightLevel1, level2: argumentsRightLevel2, level3: argumentsRightLevel3}};
 };
 
 /**
@@ -382,6 +364,11 @@ Widgets.prototype.getParentOfArgument = function(widgetId)
   return false;
 };
 
+/**
+ * Returns the level the text argument will be at for the widget, or false if widget is not valid line root
+ * @param widgetId {Number}
+ * @returns {Number|Boolean}
+ */
 Widgets.prototype.widgetIsValidLineRoot = function(widgetId)
 {
   var thisWidget = Program.widgets.value[widgetId];
@@ -389,39 +376,39 @@ Widgets.prototype.widgetIsValidLineRoot = function(widgetId)
   switch (thisWidget.name.value)
   {
     case "label":
-      return true;
+      return 1;
     case "conditionBlock":
-      return true;
+      return 3;
     case "conditionCoordinate":
-      return true;
+      return 3;
     case "droneConditionEntity":
-      return true;
+      return 2;
     case "conditionDroneEssentia":
-      return true;
+      return 2;
     case "droneConditionItem":
-      return true;
+      return 2;
     case "droneConditionLiquid":
-      return true;
+      return 2;
     case "droneConditionPressure":
-      return true;
+      return 1;
     case "droneConditionRF":
-      return true;
+      return 1;
     case "conditionEntity":
-      return true;
+      return 3;
     case "conditionEssentia":
-      return true;
+      return 3;
     case "conditionItem":
-      return true;
+      return 3;
     case "conditionItemInventory":
-      return true;
+      return 3;
     case "conditionLiquidInventory":
-      return true;
+      return 3;
     case "conditionPressure":
-      return true;
+      return 2;
     case "conditionRedstone":
-      return true;
+      return 2;
     case "conditionRF":
-      return true;
+      return 2;
     default:
       return false;
   }

@@ -716,5 +716,32 @@ function redrawWidgetConnections()
       parents.push(widgets.getArguments(i));
     }
   }
-  return parents;
+
+  for (var c = 0; c < parents.length; c++)
+  {
+    var thisArguments = widgets.getArguments(c);
+    console.log(thisArguments);
+  }
+}
+
+/**
+ * Attempts to locate a text piece by it's string value. Returns widget id on success or false on failure
+ * @param string {String}
+ * @returns {Array}
+ */
+function findTextWidgetByString(string)
+{
+  var widgetArray = Program.widgets.value;
+  var widgets = [];
+
+  for (var i = 0; i < widgetArray.length; i++)
+  {
+    var thisWidget = widgetArray[i];
+    if (typeof thisWidget.name != "undefined" && thisWidget.name.value == "text")
+    {
+      if (typeof thisWidget.string != "undefined" && thisWidget.string.value == string)
+        widgets.push(i);
+    }
+  }
+  return widgets;
 }
