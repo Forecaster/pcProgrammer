@@ -725,7 +725,7 @@ function redrawWidgetConnections()
     if (textArgumentLevel != false)
     {
       if (textArgumentLevel == 1)
-        
+
     }
   }
 }
