@@ -7,6 +7,7 @@
   <script src="functions.js"></script>
   <script src="functions_utility.js"></script>
   <script src="functions_buttons.js"></script>
+  <script src="functions_account.js"></script>
   <script src="mouse_key_events.js"></script>
   <script src="prototypes.js"></script>
 
@@ -22,8 +23,8 @@ require_once "Program.php";
 require_once "krumo/class.krumo.php";
 
 $p = "";
-if ($_GET['load'])
-  $p = $_GET['load'];
+if ($_GET['pastebin'])
+  $p = $_GET['pastebin'];
 ?>
 
 <body style="overflow: hidden; height: 0;">
@@ -39,17 +40,27 @@ if ($_GET['load'])
 
   </div>
 </div>
-<div id="menuLoadProgram" class="menu" style="margin-top: -100px; margin-left: -205px; height: 200px; width: 400px;">
+<div id="menuMyAccount" class="menu" style="margin-top: -100px; margin-left: -205px; height: 200px; width: 400px;">
   <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
   <div class="buttonClose" onclick="menuExit()"></div>
-  <div class="menuTitle">Load Program</div>
+  <div class="menuTitle">My Account</div>
+  <div id="menuMyAccountLogin">
+    <div><input id="loginUsername" type="text" placeholder="Username or Email" style="width:100%"/></div>
+    <div><input id="loginPassword" type="password" placeholder="Password" style="width:100%;"/></div>
+    <div class="menuButton" style="margin-left: 175px;margin-top:10px;">Login</div>
+  </div>
+</div>
+<div id="menuImportProgram" class="menu" style="margin-top: -100px; margin-left: -205px; height: 200px; width: 400px;">
+  <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
+  <div class="buttonClose" onclick="menuExit()"></div>
+  <div class="menuTitle">Import Program</div>
   <div>
     <input type="text" name="programUrl" id="programUrl" placeholder="Enter url to Pastebin here" style="width: 100%; margin-bottom: 10px;"/>
   </div>
   <div>
     <textarea name="programJson" id="programJson" placeholder="or paste program here from clipboard! If url box is not empty this will be ignored!" style="resize: none; width: 100%; height: 85px;"></textarea>
   </div>
-  <div class="menuButton" style="margin-left: 36%;" onclick="loadUrl();">Load</div>
+  <div class="menuButton" style="margin-left: 36%;" onclick="loadUrl();">Import</div>
   <div class="menuButton" onclick="menuExit()">Cancel</div>
 </div>
 <div id="menuAbout" class="menu" style="margin-top: -125px; margin-left: -205px; height: 250px; width: 400px;">
@@ -68,7 +79,8 @@ if ($_GET['load'])
 </div>
 <div class="mainMenu">
   <div style="display: inline; margin-right: 15px;">PneumaticCraft Program Viewer</div>
-  <div class="mainMenuItem" onclick="menuOpen('menuLoadProgram')">Load Program</div>
+  <div class="mainMenuItem" onclick="menuOpen('menuMyAccount')">My Account</div>
+  <div class="mainMenuItem" onclick="menuOpen('menuImportProgram')">Import Program</div>
   <div class="mainMenuItem" onclick="menuOpen('menuAbout')">About</div>
   <div class="mainMenuItem" onclick="menuOpen('menuGit')">Bug Reports</div>
 </div>
@@ -134,5 +146,5 @@ if ($_GET['load'])
   if (urlCode != "")
     loadProgram(urlCode);
   else
-    menuOpen("menuLoadProgram");
+    menuOpen("menuImportProgram");
 </script>

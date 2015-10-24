@@ -284,6 +284,7 @@ function parseProgramFromJson(program)
   console.log("Program.widgets.value:");
   console.log(Program.widgets.value);
   updateWidgetPositionList();
+  redrawWidgetConnections();
 }
 
 /**
@@ -369,6 +370,7 @@ function increaseScale()
   {
     setWidgetScale(newScale);
     currentScale = newScale;
+    redrawWidgetConnections();
   }
 }
 
@@ -380,6 +382,7 @@ function decreaseScale()
   {
     setWidgetScale(newScale);
     currentScale = newScale;
+    redrawWidgetConnections();
   }
 }
 
@@ -684,6 +687,11 @@ function addLinesToWidget(originWidgetId, targetWidgetIds, replace)
   }
 }
 
+function clearLines()
+{
+  document.getElementById("lineContainer").innerHTML = "";
+}
+
 function updateWidgetPositionList()
 {
   widgetPositionList = [];
@@ -707,13 +715,14 @@ function redrawWidgetConnections()
 {
   var widgetArray = Program.widgets.value;
   var parents = [];
+  clearLines();
 
   for (var i = 0; i < widgetArray.length; i++)
   {
     var widget = widgetArray[i];
-    if (widgets.widgetIsValidLineRoot(i))
+    if (widgets.widgetIsValidLineRoot(i) != false)
     {
-      parents.push(widgets.getArguments(i));
+      parents.push({arguments: widgets.getArguments(i), id: i});
     }
   }
 
@@ -721,11 +730,27 @@ function redrawWidgetConnections()
   {
     var thisArguments = parents[c];
 
-    var textArgumentLevel = widgets.widgetIsValidLineRoot(c);
-    if (textArgumentLevel != false)
+    var widgetType = widgets.widgetIsValidLineRoot(thisArguments.id);
+    if (widgetType != false)
     {
-      if (textArgumentLevel == 1)
-
+      if (thisArguments.arguments.argumentsFound > 0)
+      {
+        if (widgetType == "label")
+        {
+          var argument = thisArguments.arguments.right.level1[0];
+          var targetArguments = findTextWidgetByString(widgetArray[argument].string.value);
+          for (var o = 0; o < targetArguments.length; o++)
+          {
+            var target = widgets.getParentOfArgument(targetArguments[o]);
+            if (widgets.widgetIsValidLineTarget(target))
+              if (target != false)
+              {
+                console.log("Draw line between " + thisArguments.id + " and " + target);
+                addLinesToWidget(thisArguments.id, target);
+              }
+          }
+        }
+      }
     }
   }
 }
@@ -743,7 +768,7 @@ function findTextWidgetByString(string)
   for (var i = 0; i < widgetArray.length; i++)
   {
     var thisWidget = widgetArray[i];
-    if (typeof thisWidget.name != "undefined" && thisWidget.name.value == "text")
+    if (typeof thisWidget != "undefined" && thisWidget.name != "undefined" && thisWidget.name.value == "text")
     {
       if (typeof thisWidget.string != "undefined" && thisWidget.string.value == string)
         widgets.push(i);
