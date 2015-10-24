@@ -276,7 +276,6 @@ Z-indexes:
 
 svg
 {
-  z-index  : 1000000;
   overflow : visible;
   position : relative;
   width    : 0;
@@ -285,7 +284,7 @@ svg
 
 .lineConnection
 {
-  z-index      : 30000;
+  z-index      : 30000
   position     : relative;
   stroke       : black;
   stroke-width : 4px;

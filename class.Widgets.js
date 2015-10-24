@@ -70,9 +70,6 @@ function Widgets(baseDir)
   this.widget["wait"]                               = {sprite: "waitPiece.png"                          ,width: 80, height: 64,  name: "Wait",                         confModules: [], confModulesLeft: [], confModulesRight: [],                                                    desc: "",                                                                 argumentsLeft: [], argumentsRight: ["text"]};
   this.widget["forEachCoordinate"]                  = {sprite: "forEachCoordinate.png"                  ,width: 80, height: 108,  name: "For Each Coordinate",         confModules: ["variableName"], confModulesLeft: [], confModulesRight: [],                                      desc: "",                                                                 argumentsLeft: ["area"], argumentsRight: ["area", "text"]};
   this.widget["forEachItem"]                        = {sprite: "forEachItem.png"                        ,width: 80, height: 108,  name: "For Each Item",               confModules: ["variableName"], confModulesLeft: [], confModulesRight: [],                                      desc: "",                                                                 argumentsLeft: [], argumentsRight: ["itemFilter", "text"]};
-
-  this.argumentOffsetX = 15;
-  this.argumentOffsetY = 44;
 }
 
 Widgets.prototype.getSprite = function(name, altTexture)
@@ -339,7 +336,7 @@ Widgets.prototype.getParentOfArgument = function(widgetId)
   var possibleParentPositions = [];
   var thisWidget = Program.widgets.value[widgetId];
 
-  console.log("Widget " + widgetId + " at x" + thisWidget.x.value + " y" + thisWidget.y.value);
+  //console.log("Widget " + widgetId + " at x" + thisWidget.x.value + " y" + thisWidget.y.value);
 
   possibleParentPositions.push({x: (thisWidget.x.value - widgets.widgetArgumentOffsetX), y: (thisWidget.y.value)});
   possibleParentPositions.push({x: (thisWidget.x.value - widgets.widgetArgumentOffsetX), y: (thisWidget.y.value - widgets.widgetArgumentOffsetY)});
@@ -348,13 +345,13 @@ Widgets.prototype.getParentOfArgument = function(widgetId)
   possibleParentPositions.push({x: (thisWidget.x.value + widgets.widgetArgumentOffsetX), y: (thisWidget.y.value - widgets.widgetArgumentOffsetY)});
   possibleParentPositions.push({x: (thisWidget.x.value + widgets.widgetArgumentOffsetX), y: (thisWidget.y.value - (widgets.widgetArgumentOffsetY * 2))});
 
-  console.log(possibleParentPositions);
+  //console.log(possibleParentPositions);
 
   for (var i = 0; i < possibleParentPositions.length; i++)
   {
     var x = possibleParentPositions[i].x;
     var y = possibleParentPositions[i].y;
-    console.log("Scan for widget at x" + x + " y" + y);
+    //console.log("Scan for widget at x" + x + " y" + y);
     if (widgetPositionList[y] != undefined && widgetPositionList[y] != null)
       if (widgetPositionList[y][x] != undefined && widgetPositionList[y][x] != null)
         return widgetPositionList[y][x];
@@ -373,7 +370,7 @@ Widgets.prototype.widgetIsValidLineRoot = function(widgetId)
 
   switch (thisWidget.name.value)
   {
-    case "label":
+    case "jump":
       return 1;
     case "conditionBlock":
       return 3;
@@ -407,6 +404,23 @@ Widgets.prototype.widgetIsValidLineRoot = function(widgetId)
       return 2;
     case "conditionRF":
       return 2;
+    case "forEachCoordinate":
+      return 2;
+    case "forEachItem":
+      return 2;
+    default:
+      return false;
+  }
+};
+
+Widgets.prototype.widgetIsValidLineTarget = function(widgetId)
+{
+  var thisWidget = Program.widgets.value[widgetId];
+
+  switch (thisWidget.name.value)
+  {
+    case "label":
+      return true;
     default:
       return false;
   }

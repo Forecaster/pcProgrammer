@@ -370,7 +370,8 @@ function increaseScale()
   {
     setWidgetScale(newScale);
     currentScale = newScale;
-    redrawWidgetConnections();
+    clearLines();
+    setTimeout(redrawWidgetConnections, 1000);
   }
 }
 
@@ -382,7 +383,8 @@ function decreaseScale()
   {
     setWidgetScale(newScale);
     currentScale = newScale;
-    redrawWidgetConnections();
+    clearLines();
+    setTimeout(redrawWidgetConnections, 1000);
   }
 }
 
@@ -664,6 +666,9 @@ function addLinesToWidget(originWidgetId, targetWidgetIds, replace)
   if (typeof replace == "undefined")
     replace = false;
 
+  if (typeof originWidgetId != "number")
+    return;
+
   if (typeof targetWidgetIds == "number")
     targetWidgetIds = [targetWidgetIds];
 
@@ -726,6 +731,8 @@ function redrawWidgetConnections()
     }
   }
 
+  console.log("Redrawing lines! Found " + parents.length + " valid line roots");
+
   for (var c = 0; c < parents.length; c++)
   {
     var thisArguments = parents[c];
@@ -735,23 +742,55 @@ function redrawWidgetConnections()
     {
       if (thisArguments.arguments.argumentsFound > 0)
       {
-        if (widgetType == "label")
+        var argumentIdLeft = false;
+        var argumentIdRight = false;
+        if (widgetType == 1)
         {
-          var argument = thisArguments.arguments.right.level1[0];
-          var targetArguments = findTextWidgetByString(widgetArray[argument].string.value);
-          for (var o = 0; o < targetArguments.length; o++)
+          argumentIdLeft = thisArguments.arguments.left.level1[0];
+          argumentIdRight = thisArguments.arguments.right.level1[0];
+        }
+        else if (widgetType == 2)
+        {
+          argumentIdLeft = thisArguments.arguments.left.level2[0];
+          argumentIdRight = thisArguments.arguments.right.level2[0];
+        }
+        else if (widgetType == 3)
+        {
+          argumentIdLeft = thisArguments.arguments.left.level3[0];
+          argumentIdRight = thisArguments.arguments.right.level3[0];
+        }
+
+        if (typeof argumentIdLeft == "number")
+        {
+          var targetArgumentsLeft = findTextWidgetByString(widgetArray[argumentIdLeft].string.value);
+          for (var o = 0; o < targetArgumentsLeft.length; o++)
           {
-            var target = widgets.getParentOfArgument(targetArguments[o]);
-            if (widgets.widgetIsValidLineTarget(target))
-              if (target != false)
-              {
-                console.log("Draw line between " + thisArguments.id + " and " + target);
-                addLinesToWidget(thisArguments.id, target);
-              }
+            var targetLeft = widgets.getParentOfArgument(targetArgumentsLeft[o]);
+            if (targetLeft != false && widgets.widgetIsValidLineTarget(targetLeft))
+            {
+              addLinesToWidget(thisArguments.id, targetLeft);
+            }
+          }
+        }
+
+        if (typeof argumentIdRight == "number")
+        {
+          var targetArgumentsRight = findTextWidgetByString(widgetArray[argumentIdRight].string.value);
+          for (var p = 0; p < targetArgumentsRight.length; p++)
+          {
+            var targetRight = widgets.getParentOfArgument(targetArgumentsRight[p]);
+            if (targetRight != false && widgets.widgetIsValidLineTarget(targetRight))
+            {
+              addLinesToWidget(thisArguments.id, targetRight);
+            }
           }
         }
       }
+      else
+        console.log("Widget has no arguments");
     }
+    else
+      console.log("Invalid widget type");
   }
 }
 
