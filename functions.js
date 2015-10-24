@@ -776,3 +776,19 @@ function findTextWidgetByString(string)
   }
   return widgets;
 }
+
+function focusOnTextWidgetWithContent(string)
+{
+  if (typeof string != "undefined" && string != "")
+  {
+    var widgets = findTextWidgetByString(string);
+
+    if (widgets.length > 0)
+    {
+      focusOnWidgetPos(widgets[0]);
+      highlightFocus();
+    }
+    else
+      addMessage("No matching widgets found.");
+  }
+}

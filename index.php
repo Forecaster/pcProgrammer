@@ -98,6 +98,12 @@ if ($_GET['pastebin'])
   <div class="contextMenuItem" onclick="focusNextStart()">Focus Next Start</div>
   <div class="contextMenuItem" onclick="focusNextLabel()">Focus Next Label</div>
   <div class="contextMenuItem" onclick="focusNextWidget()">Focus Next Piece</div>
+  <div class="contextMenuItem" onclick="contextMenuHide(); menuOpen('menuFindText')">Find Widget By Text</div>
+</div>
+<div id="menuFindText" class="menu" style="margin-top: -75px; margin-left: -150px; height: 150px; width: 300px;">
+  <div class="menuTitle">Find Widget By Text</div>
+  <div><input type="text" id="menuFindTextInput" placeholder="Text in widget" style="width: 100%;" /></div>
+  <div style="text-align: center;"><input type="submit" value="Search" onclick="menuExit(); focusOnTextWidgetWithContent(document.getElementById('menuFindTextInput').value);" /></div>
 </div>
 <div id="menuOptions" class="menu" style="margin-top:"></div>
 <div class="zoomBar" id="zoomBar"></div>
