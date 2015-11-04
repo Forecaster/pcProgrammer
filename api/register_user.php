@@ -10,32 +10,17 @@ $email = $_POST['email'];
 $user_id = $_POST['identifier'];
 
 if ($user_id == "")
-{
-  echo ERR_NO_ID;
-  return;
-}
+  die(ERR_NO_ID);
 elseif ($username == "")
-{
-  echo ERR_EMPTY_USER;
-  return;
-}
+  die(ERR_EMPTY_USER);
 elseif ($password == "")
-{
-  echo ERR_EMPTY_PASS;
-  return;
-}
+  die(ERR_EMPTY_PASS);
 elseif ($email == "")
-{
-  echo ERR_EMPTY_EMAIL;
-  return;
-}
+  die(ERR_EMPTY_EMAIL);
 
 $email = validateSanitizeEmail($email);
 if ($email === false)
-{
-  echo ERR_BAD_EMAIL;
-  return;
-}
+  die(ERR_BAD_EMAIL);
 
 //Check username
 $query = "SELECT * FROM `users` WHERE `username` = '$username'";
@@ -45,16 +30,12 @@ $result = mysqli_query($con, $query);
 if ($result)
 {
   if (mysqli_num_rows($result) > 0)
-  {
-    echo ERR_USER_EXISTS;
-    return;
-  }
+    die(ERR_USER_EXISTS);
 }
 else
 {
   log_file($user_id." - ".mysqli_error($con), "../sql.log");
-  echo ERR_SQL;
-  return;
+  die(ERR_SQL);
 }
 
 //check email
@@ -65,16 +46,12 @@ $result = mysqli_query($con, $query);
 if ($result)
 {
   if (mysqli_num_rows($result) > 0)
-  {
-    echo ERR_USER_EXISTS;
-    return;
-  }
+    die(ERR_USER_EXISTS);
 }
 else
 {
   log_file($user_id." - ".mysqli_error($con), "../sql.log");
-  echo ERR_SQL;
-  return;
+  die(ERR_SQL);
 }
 
 //Encrypt password
@@ -92,12 +69,10 @@ $result = mysqli_query($con, $query);
 
 if ($result)
 {
-  echo "0:User registered successfully";
-  return;
+  die(OP_SUCCESS);
 }
 else
 {
   log_file($user_id." - ".mysqli_error($con), "../sql.log");
-  echo ERR_SQL;
-  return;
+  die(ERR_SQL);
 }
