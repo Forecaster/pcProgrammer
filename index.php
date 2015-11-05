@@ -8,7 +8,8 @@
   <script src="functions_utility.js"></script>
   <script src="functions_buttons.js"></script>
   <script src="functions_account.js"></script>
-  <script src="mouse_key_events.js"></script>
+  <script src="functions_mouse_events.js"></script>
+  <script src="functions_key_events.js"></script>
   <script src="prototypes.js"></script>
 
   <script src="class.Widgets.js"></script>
@@ -40,15 +41,26 @@ if ($_GET['pastebin'])
 
   </div>
 </div>
-<div id="menuMyAccount" class="menu" style="margin-top: -100px; margin-left: -205px; height: 200px; width: 400px;">
+<div id="menuMyAccountLogin" class="menu" style="margin-top: -100px; margin-left: -205px; height: 200px; width: 400px;">
   <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
   <div class="buttonClose" onclick="menuExit()"></div>
-  <div class="menuTitle">My Account</div>
-  <div id="menuMyAccountLogin">
-    <div><input id="loginUsername" type="text" placeholder="Username or Email" style="width:100%"/></div>
-    <div><input id="loginPassword" type="password" placeholder="Password" style="width:100%;"/></div>
-    <div class="menuButton" style="margin-left: 175px;margin-top:10px;">Login</div>
+  <div class="menuTitle">My Account: Login</div>
+  <div>
+    <div><input id="loginUsername" type="text" placeholder="Username or Email" style="width:100%;" /></div>
+    <div><input id="loginPassword" type="password" placeholder="Password" style="width:100%;" /></div>
+    <div class="menuButton" style="margin-left: 175px;margin-top:10px;" onclick="login();">Login</div>
   </div>
+</div>
+<div id="menuMyAccount" class="menu" style="margin-top: -100px; margin-left: -205px; height: 200px; width: 400px;">
+  <div class="buttonBack" title="Back: to previous menu" onclick="menuBack();"></div>
+  <div class="buttonClose" onclick="menuExit();"></div>
+  <div class="menuTitle" id="menuMyAccountTitle">My Account: Unknown User</div>
+  <div>
+    <div id="menuMyAccountEmail"></div>
+    <div id="menuMyAccountJoined"></div>
+    <div id="menuMyAccountPrograms"></div>
+  </div>
+  <div class="menuButton">Logout</div>
 </div>
 <div id="menuImportProgram" class="menu" style="margin-top: -100px; margin-left: -205px; height: 200px; width: 400px;">
   <div class="buttonBack" title="Back: to previous menu" onclick="menuBack()"></div>
@@ -79,7 +91,7 @@ if ($_GET['pastebin'])
 </div>
 <div class="mainMenu">
   <div style="display: inline; margin-right: 15px;">PneumaticCraft Program Viewer</div>
-  <div class="mainMenuItem" onclick="menuOpen('menuMyAccount')">My Account</div>
+  <div class="mainMenuItem" onclick="accessMyPage()">My Account</div>
   <div class="mainMenuItem" onclick="menuOpen('menuImportProgram')">Import Program</div>
   <div class="mainMenuItem" onclick="menuOpen('menuAbout')">About</div>
   <div class="mainMenuItem" onclick="menuOpen('menuGit')">Bug Reports</div>
@@ -142,6 +154,7 @@ if ($_GET['pastebin'])
   var widgetPositionList;
 
   var Program = {};
+  var user = {};
 
   var urlCode = "<? echo $p;?>";
 

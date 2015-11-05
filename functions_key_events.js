@@ -5,8 +5,8 @@ function onKeyDown(e)
 {
   if (e.keyCode == 16)
     shift = 1;
-  //else
-  //  console.log(e.keyCode);
+
+  console.log(e);
 }
 
 function onKeyUp(e)

@@ -37,9 +37,14 @@ if ($result)
     $stored_hash = $data['password'];
     if ($stored_hash == crypt($password, $stored_hash))
     {
+      $now = time();
+      $query = "UPDATE `users` SET last_login = '$now' WHERE username = '$username'";
+      mysqli_query($con, $query);
       session_start();
       $session_id = session_id();
       $_SESSION['username'] = $username;
+      $_SESSION['email'] = $data['email'];
+      $_SESSION['joined'] = $data['joined'];
       die($session_id);
     }
     else
