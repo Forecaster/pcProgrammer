@@ -16,9 +16,6 @@ var pan = false;
 document.onmousedown = onMouseDown;
 document.onmouseup = onMouseUp;
 
-document.onkeydown = onKeyDown;
-document.onkeyup = onKeyUp;
-
 document.onmousemove = onMouseMove;
 document.oncontextmenu = onContextMenu;
 
@@ -66,24 +63,6 @@ function onContextMenu(e)
     contextMenuShow(e);
     return false;
   }
-}
-
-function onKeyDown(e)
-{
-  if (e.keyCode == 16)
-    shift = 1;
-  //else
-  //  console.log(e.keyCode);
-}
-
-function onKeyUp(e)
-{
-  if (e.keyCode == 16)
-    shift = 0;
-  //else if (e.keyCode == 13) //Enter key
-
-  //console.log("Released key: " + e.key)
-  //console.log(e);
 }
 
 function onMouseDown(e)
