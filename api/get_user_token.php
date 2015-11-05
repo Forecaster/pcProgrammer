@@ -10,9 +10,9 @@ $user_id = $_POST['identifier'];
 $query = "";
 
 if ($username == "")
-  return ERR_EMPTY_USER;
+  die(ERR_NO_USER);
 if ($password == "")
-  return ERR_EMPTY_PASS;
+  die(ERR_NO_PASS);
 
 if (strpos($username, '@') !== false)
 {
@@ -25,7 +25,7 @@ else
   $query = "SELECT * FROM `users` WHERE `username`='$username'";
 
 if ($query == "")
-  echo ERR_GENERIC;
+  die(ERR_GENERIC);
 
 $result = mysqli_query($con, $query);
 
@@ -40,24 +40,16 @@ if ($result)
       session_start();
       $session_id = session_id();
       $_SESSION['username'] = $username;
-      echo $session_id;
-      return;
+      die($session_id);
     }
     else
-    {
-      echo ERR_BAD_PASS;
-      return;
-    }
+      die(ERR_BAD_PASS);
   }
   else
-  {
-    echo ERR_NO_USER;
-    return;
-  }
+    die(ERR_NO_USER);
 }
 else
 {
   log_file($user_id." - ".mysqli_error($con), "../sql.log");
-  echo ERR_SQL;
-  return;
+  die(ERR_SQL);
 }
